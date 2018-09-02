@@ -37,3 +37,15 @@ This tutorial will walk through practicing the Double Loop Workflow to create a 
     - Add Faker to Context, generate some text
     - Add Guzzle Client to Context, post a chirp
     - Use Guzzle to request the timeline, throw exception if not present
+    
+#### Add Unit Tests
+- Add Unit Test for `ChirpIoService->create`
+    - Create Method needs To:
+        - Take in User Input and turn it into a Chirp
+        - Send Chirp to Persistence Layer (DB)
+        - Return an appropriate response.
+    - Do proof-of-concept working code first if needed
+        - Stub request data
+        - All routes will accept a PSR-7 request (uses Guzzle PSR 7 interface)
+            - Create PSR-7 compliant Request/Response base classes
+        - Create 

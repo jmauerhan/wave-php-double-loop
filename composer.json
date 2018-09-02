@@ -10,7 +10,10 @@
   ],
   "require": {
     "php": "^7.2",
-    "ext-json": "*"
+    "ext-json": "*",
+    "silex/silex": "^2.3",
+    "guzzlehttp/psr7": "^1.4",
+    "ramsey/uuid": "^3.8"
   },
   "require-dev": {
     "behat/behat": "^3.5",
