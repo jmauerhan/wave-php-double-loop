@@ -9,10 +9,13 @@
     }
   ],
   "require": {
-    "php": "^7.2"
+    "php": "^7.2",
+    "ext-json": "*"
   },
   "require-dev": {
-    "behat/behat": "^3.5"
+    "behat/behat": "^3.5",
+    "fzaninotto/faker": "^1.8",
+    "guzzlehttp/guzzle": "^6.3"
   },
   "autoload": {
     "psr-4": {
