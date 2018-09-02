@@ -29,4 +29,4 @@ $preparedStmt->execute(['id' => $id, 'chirp_text' => $text]);
 //Get the chirps out to see
 $sql    = "SELECT * FROM chirp";
 $result = $pdo->query($sql);
-var_dump($result->fetchAll());
+var_dump($result->fetchAll(PDO::FETCH_ASSOC));
