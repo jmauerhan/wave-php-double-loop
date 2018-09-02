@@ -10,5 +10,15 @@
   ],
   "require": {
     "php": "^7.2"
+  },
+  "require-dev": {
+    "behat/behat": "^3.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Chirper\\": "src/",
+      "Test\\": "tests/",
+      "Test\\Behavior\\Context\\": "features/bootstrap/"
+    }
   }
 }

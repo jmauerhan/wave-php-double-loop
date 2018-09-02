@@ -5,4 +5,6 @@ RUN docker-php-ext-install pdo pdo_pgsql
 
 EXPOSE 80
 
-CMD ["php", "-S", "0.0.0.0:80", "-t", "/var/www/public", "/var/www/public/src/router.php"]
+WORKDIR /var/www
+
+CMD ["php", "-S", "0.0.0.0:80", "-t", "/var/www", "/var/www/public/router.php"]

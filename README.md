@@ -7,7 +7,7 @@
 
 ### Recommended
 - [Postman App](https://www.getpostman.com/)
-- Chrome with the [JSON Viewer extention](https://chrome.google.com/webstore/detail/json-viewer/gbmdgpbipfallnflgajpaliibnhdgobh)
+- Chrome with the [JSON Viewer extension](https://chrome.google.com/webstore/detail/json-viewer/gbmdgpbipfallnflgajpaliibnhdgobh)
 
 ## Setup - Do this before the conference!
 - `composer install` 
@@ -17,4 +17,8 @@
 
 ### Outline
 - Feature: Create Chirp
-- 
+    - `vendor/bin/behat --init`  
+    - Add feature
+    - View prompts: `vendor/bin/behat`
+    - Create new Context File: `CreateChirpContext` & `behat.yml`
+    - `vendor/bin/behat --append-snippets`
