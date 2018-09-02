@@ -7,6 +7,7 @@
 
 ### Recommended
 - [Postman App](https://www.getpostman.com/)
+- Chrome with the [JSON Viewer extention](https://chrome.google.com/webstore/detail/json-viewer/gbmdgpbipfallnflgajpaliibnhdgobh)
 
 ## Setup - Do this before the conference!
 - `composer install` 
