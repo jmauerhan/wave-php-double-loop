@@ -23,9 +23,8 @@ This tutorial will walk through practicing the Double Loop Workflow to create a 
 
 #### Ensure in Project Setup
 - phinx.yml
-
-#### Project Init Tasks
-- `vendor/bin/behat --init`  
+- empty db migrations/seeds folders
+- behat.yml  
 
 #### Creating Chirps Task
 
@@ -44,14 +43,22 @@ This tutorial will walk through practicing the Double Loop Workflow to create a 
 #### Add Unit Tests
 - Add Unit Test for `ChirpIoService->create`
     - Create Method needs To:
-        - Take in User Input and turn it into a Chirp
-        - Send Chirp to Persistence Layer (DB)
+        - Process/Handle User Input 
+        - Persist Data (DB)
         - Return an appropriate response.
     - Do proof-of-concept working code first if needed
         - Stub request data
-        - Create Chirp from data
-        - Persist Chirp - need DB migration
-            
+        - Persist Data 
+            - need DB migration
+                ```
+                $table = $this->table('chirp', ['id' => false, 'primary_key' => 'id']);
+                $table->addColumn('id', 'uuid')
+                      ->addColumn('chirp_text', 'string', ['limit' => 100])
+                      ->create();
+                ```
+            - `vendor/bin/phinx migrate` (within container)
+        - Write SQL
+        - Run POC.
         - All routes will accept a PSR-7 request (uses Guzzle PSR 7 interface)
             - Create PSR-7 compliant Request/Response base classes
         - Create 

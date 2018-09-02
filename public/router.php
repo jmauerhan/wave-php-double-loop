@@ -2,25 +2,31 @@
 
 require_once './vendor/autoload.php';
 
-//The data that will be submitted to us
-$uuid = \Ramsey\Uuid\Uuid::uuid4();
-$obj  = (object)[
+$faker = Faker\Factory::create();
+$obj   = (object)[
     'data' => (object)[
         'type'       => 'chirp',
-        'id'         => $uuid,
+        'id'         => $faker->uuid,
         'attributes' => (object)[
-            'text' => 'Hi, this is a chirp'
+            'text' => $faker->realText(100)
         ]
     ]
 ];
 
-//Convert it into an object
-$data  = $obj->data;
-$chirp = new \Chirper\Chirp\Chirp($data->id, $data->attributes->text);
+$id   = $obj->data->id;
+$text = $obj->data->attributes->text;
 
 //Save it
-$dsn    = 'pgsql:dbname=chirper;host=chirper-db';
+$dsn    = 'pgsql:dbname=chirper;host=db';
 $dbUser = 'postgres';
 $dbPass = 'postgres';
 $pdo    = new PDO($dsn, $dbUser, $dbPass);
 
+$sql          = "INSERT INTO chirp(id, chirp_text) VALUES(:id, :chirp_text)";
+$preparedStmt = $pdo->prepare($sql);
+$preparedStmt->execute(['id' => $id, 'chirp_text' => $text]);
+
+//Get the chirps out to see
+$sql    = "SELECT * FROM chirp";
+$result = $pdo->query($sql);
+var_dump($result->fetchAll());
