@@ -1,0 +1,14 @@
+{
+  "name": "jmauerhan/wave-php-double-loop",
+  "description": "Wave PHP Double Loop Tutorial",
+  "type": "project",
+  "authors": [
+    {
+      "name": "Jessica Mauerhan",
+      "email": "jessicamauerhan@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^7.2"
+  }
+}

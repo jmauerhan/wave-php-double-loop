@@ -13,3 +13,7 @@
 - `docker-compose up -d`
 - Browse to `localhost:3000` and confirm there is a PHP info page
   - If you're using docker-machine instead of Docker-for-X, use the correct IP address.
+
+### Outline
+- Feature: Create Chirp
+- 
