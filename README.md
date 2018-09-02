@@ -21,6 +21,9 @@ This tutorial will walk through practicing the Double Loop Workflow to create a 
 
 ### Outline
 
+#### Ensure in Project Setup
+- phinx.yml
+
 #### Project Init Tasks
 - `vendor/bin/behat --init`  
 
@@ -46,6 +49,9 @@ This tutorial will walk through practicing the Double Loop Workflow to create a 
         - Return an appropriate response.
     - Do proof-of-concept working code first if needed
         - Stub request data
+        - Create Chirp from data
+        - Persist Chirp - need DB migration
+            
         - All routes will accept a PSR-7 request (uses Guzzle PSR 7 interface)
             - Create PSR-7 compliant Request/Response base classes
         - Create 

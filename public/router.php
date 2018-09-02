@@ -23,3 +23,4 @@ $dsn    = 'pgsql:dbname=chirper;host=chirper-db';
 $dbUser = 'postgres';
 $dbPass = 'postgres';
 $pdo    = new PDO($dsn, $dbUser, $dbPass);
+
