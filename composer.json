@@ -11,6 +11,7 @@
   "require": {
     "php": "^7.2",
     "ext-json": "*",
+    "ext-pdo": "*",
     "silex/silex": "^2.3",
     "guzzlehttp/psr7": "^1.4",
     "ramsey/uuid": "^3.8"

@@ -15,3 +15,11 @@ $obj  = (object)[
 ];
 
 //Convert it into an object
+$data  = $obj->data;
+$chirp = new \Chirper\Chirp\Chirp($data->id, $data->attributes->text);
+
+//Save it
+$dsn    = 'pgsql:dbname=chirper;host=chirper-db';
+$dbUser = 'postgres';
+$dbPass = 'postgres';
+$pdo    = new PDO($dsn, $dbUser, $dbPass);
