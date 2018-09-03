@@ -54,6 +54,8 @@ This tutorial will walk through practicing the Double Loop Workflow to create a 
                 $table = $this->table('chirp', ['id' => false, 'primary_key' => 'id']);
                 $table->addColumn('id', 'uuid')
                       ->addColumn('chirp_text', 'string', ['limit' => 100])
+                      ->addColumn('author', 'string', ['limit' => 200])
+                      ->addColumn('created_at', 'datetime')
                       ->create();
                 ```
             - `vendor/bin/phinx migrate` (within container)
@@ -65,3 +67,11 @@ This tutorial will walk through practicing the Double Loop Workflow to create a 
         - Process User Input - Validation & Transformation
             - Better to pass objects vs primitives, create a Chirp Object
         - Create `Create` Action
+            - stub tests:
+                - takes request and passes it to transformer to get Chirp object
+                    - Handle exceptions, means data isn't valid, return error response
+                - sends Chirp to persistence layer
+                    - if exception, return error response
+                - If successful, transform saved Chirp back to json
+                    - if error, return an internal server error
+                    - if success, return chirp created response 

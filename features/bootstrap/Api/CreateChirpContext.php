@@ -45,12 +45,14 @@ class CreateChirpContext implements Context
     public function iPostTheChirp()
     {
         $this->uuid = $this->faker->uuid;
+        $author     = $this->faker->userName;
         $obj        = (object)[
             'data' => (object)[
                 'type'       => 'chirp',
                 'id'         => $this->uuid,
                 'attributes' => (object)[
-                    'text' => $this->chirpText
+                    'text'   => $this->chirpText,
+                    'author' => $author
                 ]
             ]
         ];

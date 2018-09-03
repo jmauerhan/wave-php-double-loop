@@ -36,6 +36,8 @@ class CreateChirpTable extends AbstractMigration
         $table = $this->table('chirp', ['id' => false, 'primary_key' => 'id']);
         $table->addColumn('id', 'uuid')
               ->addColumn('chirp_text', 'string', ['limit' => 100])
+              ->addColumn('author', 'string', ['limit' => 200])
+              ->addColumn('created_at', 'datetime')
               ->create();
     }
 }

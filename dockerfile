@@ -7,4 +7,4 @@ EXPOSE 80
 
 WORKDIR /var/www
 
-CMD ["php", "-S", "0.0.0.0:80", "-t", "/var/www", "/var/www/public/router.php"]
+CMD ["php", "-S", "0.0.0.0:80", "-t", "/var/www/public", "/var/www/public/src/router.php"]
