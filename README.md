@@ -84,4 +84,5 @@ This tutorial will walk through practicing the Double Loop Workflow to create a 
     - Fill in JsonApiTransformer Tests & Class
         - To chirp success
         - To chirp failures
+            - Refactor Checks
             

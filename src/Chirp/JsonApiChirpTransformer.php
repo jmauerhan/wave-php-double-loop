@@ -21,26 +21,18 @@ class JsonApiChirpTransformer implements JsonChirpTransformer
         if ($object === null) {
             throw new InvalidJsonException();
         }
-        if (property_exists($object, 'data') === false) {
-            throw new InvalidJsonApiException('Missing data');
-        }
-
+        $this->checkRequiredProperty($object, 'data', 'data');
         $data = $object->data;
-        if (property_exists($data, 'type') === false) {
-            throw new InvalidJsonApiException('Missing data->type');
-        }
-        if (property_exists($data, 'id') === false) {
-            throw new InvalidJsonApiException('Missing data->id');
-        }
-        if (property_exists($data, 'attributes') === false) {
-            throw new InvalidJsonApiException('Missing data->attributes');
+
+        $keys = ['type', 'id', 'attributes'];
+        foreach ($keys AS $key) {
+            $this->checkRequiredProperty($data, $key, 'data->' . $key);
         }
         $attributes = $data->attributes;
-        if (property_exists($attributes, 'text') === false) {
-            throw new InvalidJsonApiException('Missing data->attributes->text');
-        }
-        if (property_exists($attributes, 'author') === false) {
-            throw new InvalidJsonApiException('Missing data->attributes->author');
+
+        $keys = ['text', 'author'];
+        foreach ($keys AS $key) {
+            $this->checkRequiredProperty($attributes, $key, 'data->attributes->' . $key);
         }
 
         $uuid   = $data->id;
@@ -49,5 +41,12 @@ class JsonApiChirpTransformer implements JsonChirpTransformer
         $time   = (new \DateTime())->format('Y-m-d H:i:s');
 
         return new Chirp($uuid, $text, $author, $time);
+    }
+
+    private function checkRequiredProperty($object, $property, $key)
+    {
+        if (property_exists($object, $property) === false) {
+            throw new InvalidJsonApiException("Missing {$key}");
+        }
     }
 }
