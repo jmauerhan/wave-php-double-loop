@@ -4,7 +4,7 @@ namespace Chirper\Chirp;
 
 use Chirper\Persistence\PersistenceDriverException;
 
-interface ChirpPersistence
+interface PersistenceDriver
 {
     /**
      * @param Chirp $chirp

@@ -4,7 +4,7 @@ namespace Test\Chirp;
 
 use Chirper\Chirp\Chirp;
 use Chirper\Chirp\ChirpCreatedResponse;
-use Chirper\Chirp\ChirpPersistence;
+use Chirper\Chirp\PersistenceDriver;
 use Chirper\Chirp\CreateAction;
 use Chirper\Transform\InvalidJsonException;
 use Chirper\Chirp\JsonChirpTransformer;
@@ -23,7 +23,7 @@ class CreateActionTest extends TestCase
     /** @var MockObject|JsonChirpTransformer */
     private $transformer;
 
-    /** @var MockObject|ChirpPersistence */
+    /** @var MockObject|PersistenceDriver */
     private $persistence;
 
     /** @var Generator */
@@ -32,7 +32,7 @@ class CreateActionTest extends TestCase
     public function setUp()
     {
         $this->transformer = $this->createMock(JsonChirpTransformer::class);
-        $this->persistence = $this->createMock(ChirpPersistence::class);
+        $this->persistence = $this->createMock(PersistenceDriver::class);
         $this->faker       = Factory::create();
         parent::setUp();
     }

@@ -14,10 +14,10 @@ class CreateAction
     /** @var JsonChirpTransformer */
     private $transformer;
 
-    /** @var ChirpPersistence */
+    /** @var PersistenceDriver */
     private $persistence;
 
-    public function __construct(JsonChirpTransformer $transformer, ChirpPersistence $persistence)
+    public function __construct(JsonChirpTransformer $transformer, PersistenceDriver $persistence)
     {
         $this->transformer = $transformer;
         $this->persistence = $persistence;
