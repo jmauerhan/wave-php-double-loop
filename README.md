@@ -59,6 +59,9 @@ This tutorial will walk through practicing the Double Loop Workflow to create a 
             - `vendor/bin/phinx migrate` (within container)
         - Write SQL
         - Run POC.
-        - All routes will accept a PSR-7 request (uses Guzzle PSR 7 interface)
+    - Design action method to handle this
+        - All routes will use PSR-7 request/response (uses Guzzle PSR 7 interface)
             - Create PSR-7 compliant Request/Response base classes
-        - Create 
+        - Process User Input - Validation & Transformation
+            - Better to pass objects vs primitives, create a Chirp Object
+        - Create `Create` Action
