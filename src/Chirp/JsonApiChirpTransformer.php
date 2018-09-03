@@ -8,7 +8,6 @@ use Chirper\Transform\TransformerException;
 
 class JsonApiChirpTransformer implements JsonChirpTransformer
 {
-
     public function toJson(Chirp $chirp): string
     {
         $object = (object)[
@@ -64,7 +63,7 @@ class JsonApiChirpTransformer implements JsonChirpTransformer
     private function checkRequiredProperty($object, $property, $key)
     {
         if (property_exists($object, $property) === false) {
-            throw new InvalidJsonApiException("Missing {$key}");
+            throw new InvalidJsonApiException([$key => 'Missing Data']);
         }
     }
 }

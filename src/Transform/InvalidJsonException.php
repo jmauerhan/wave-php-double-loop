@@ -3,12 +3,19 @@
 namespace Chirper\Transform;
 
 use Chirper\Exception;
+use Chirper\Http\Response;
 use Throwable;
 
 class InvalidJsonException extends Exception
 {
-    public function __construct(string $message = "", Throwable $previous = null)
+    public function __construct(array $errors = null, Throwable $previous = null)
     {
-        parent::__construct($message, self::INVALID_JSON, $previous);
+        $errors  = $errors ?? [[
+                                   'status' => Response::BAD_REQUEST,
+                                   'title'  => 'Invalid JSON',
+                                   'detail' => 'Invalid or missing JSON data structure'
+                               ]];
+        $message = json_encode((object)['errors' => $errors]);
+        parent::__construct($message, 0, $previous);
     }
 }

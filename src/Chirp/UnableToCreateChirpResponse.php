@@ -6,9 +6,9 @@ use Chirper\Http\Response;
 
 class UnableToCreateChirpResponse extends Response
 {
-    public function __construct(string $error)
+    public function __construct($body = null)
     {
-        $message = 'Unable to create Chirp: ' . $error;
-        parent::__construct(Response::BAD_REQUEST, [], $message);
+        $status = Response::BAD_REQUEST;
+        parent::__construct($status, [], $body);
     }
 }

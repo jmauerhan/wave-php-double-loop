@@ -2,6 +2,8 @@
 
 namespace Chirper\Transform;
 
+use Throwable;
+
 class InvalidJsonApiException extends InvalidJsonException
 {
 
