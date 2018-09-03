@@ -4,7 +4,9 @@ namespace Test\Chirp;
 
 use Chirper\Chirp\ChirpPersistence;
 use Chirper\Chirp\CreateAction;
+use Chirper\Chirp\InvalidJsonException;
 use Chirper\Chirp\JsonChirpTransformer;
+use Chirper\Chirp\UnableToCreateChirpResponse;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Chirper\Http\Request;
@@ -39,7 +41,16 @@ class CreateActionTest extends TestCase
 
     public function testCreateReturnsInvalidChirpResponseOnTransformerException()
     {
+        $json    = '{"data":"some data"}';
+        $request = new Request('POST', 'chirp', [], $json);
 
+        $exception = new InvalidJsonException("Missing id field");
+        $this->transformer->method('toChirp')
+                          ->willThrowException($exception);
+
+        $action   = new CreateAction($this->transformer, $this->persistence);
+        $response = $action->create($request);
+        $this->assertInstanceOf(UnableToCreateChirpResponse::class, $response);
     }
 
     public function testCreateSendsChirpToPersistence()
