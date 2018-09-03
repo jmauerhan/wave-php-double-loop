@@ -21,6 +21,12 @@ class CreateAction
 
     public function create(Request $request): Response
     {
+        $json = $request->getBody()->getContents();
+        try {
+            $this->transformer->toChirp($json);
+        } catch (InvalidJsonException $invalidJsonException) {
+            return new UnableToCreateChirpResponse($invalidJsonException->getMessage());
+        }
         return new Response();
     }
 }

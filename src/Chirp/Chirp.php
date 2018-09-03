@@ -10,10 +10,18 @@ class Chirp
     /** @var string */
     private $text;
 
-    public function __construct(string $id, string $text)
+    /** @var string */
+    private $author;
+
+    /** @var \DateTime */
+    private $createdAt;
+
+    public function __construct(string $id, string $text, string $author, \DateTime $createdAt)
     {
-        $this->id   = $id;
-        $this->text = $text;
+        $this->id        = $id;
+        $this->text      = $text;
+        $this->author    = $author;
+        $this->createdAt = $createdAt;
     }
 
     public function getId(): string

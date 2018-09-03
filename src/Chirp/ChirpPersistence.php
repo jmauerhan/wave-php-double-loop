@@ -4,5 +4,5 @@ namespace Chirper\Chirp;
 
 interface ChirpPersistence
 {
-
+    public function save(Chirp $chirp): Chirp;
 }

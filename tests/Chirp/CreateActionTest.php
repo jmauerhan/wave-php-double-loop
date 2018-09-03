@@ -2,11 +2,14 @@
 
 namespace Test\Chirp;
 
+use Chirper\Chirp\Chirp;
 use Chirper\Chirp\ChirpPersistence;
 use Chirper\Chirp\CreateAction;
 use Chirper\Chirp\InvalidJsonException;
 use Chirper\Chirp\JsonChirpTransformer;
 use Chirper\Chirp\UnableToCreateChirpResponse;
+use Faker\Factory;
+use Faker\Generator;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Chirper\Http\Request;
@@ -19,10 +22,14 @@ class CreateActionTest extends TestCase
     /** @var MockObject|ChirpPersistence */
     private $persistence;
 
+    /** @var Generator */
+    private $faker;
+
     public function setUp()
     {
         $this->transformer = $this->createMock(JsonChirpTransformer::class);
         $this->persistence = $this->createMock(ChirpPersistence::class);
+        $this->faker       = Factory::create();
         parent::setUp();
     }
 
@@ -55,23 +62,34 @@ class CreateActionTest extends TestCase
 
     public function testCreateSendsChirpToPersistence()
     {
+        $request = new Request('POST', 'chirp', [], "");
+        $chirp   = new Chirp($this->faker->uuid, $this->faker->realText(100), $this->faker->userName, new \DateTime());
 
+        $this->transformer->method('toChirp')
+                          ->willReturn($chirp);
+
+        $this->persistence->expects($this->once())
+                          ->method('save')
+                          ->with($chirp);
+
+        $action = new CreateAction($this->transformer, $this->persistence);
+        $action->create($request);
     }
-
-    public function testCreateReturnsInternalErrorResponseOnPersistenceException()
-    {
-    }
-
-    public function testCreateSendsSavedChirpToTransformer()
-    {
-
-    }
-
-    public function testCreateReturnsInternalServerErrorResponseOnTransformerException()
-    {
-    }
-
-    public function testCreateReturnsChirpCreatedResponseOnSuccess()
-    {
-    }
+//
+//    public function testCreateReturnsInternalErrorResponseOnPersistenceException()
+//    {
+//    }
+//
+//    public function testCreateSendsSavedChirpToTransformer()
+//    {
+//
+//    }
+//
+//    public function testCreateReturnsInternalServerErrorResponseOnTransformerException()
+//    {
+//    }
+//
+//    public function testCreateReturnsChirpCreatedResponseOnSuccess()
+//    {
+//    }
 }
