@@ -1,11 +1,20 @@
 <?php declare(strict_types=1);
 
-namespace Test\Chirp\Actions;
+namespace Test\Chirp;
 
 use PHPUnit\Framework\TestCase;
 
-class TestCreate extends TestCase
+class TestCreateAction extends TestCase
 {
+    private $jsonChirpTransformer;
+    private $chirpPersistence;
+
+    public function setUp()
+    {
+
+        parent::setUp();
+    }
+
     public function testCreateSendsRequestToTransformer()
     {
 
