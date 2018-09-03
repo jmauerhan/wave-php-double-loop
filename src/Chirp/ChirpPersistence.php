@@ -8,9 +8,9 @@ interface ChirpPersistence
 {
     /**
      * @param Chirp $chirp
-     * @return Chirp
+     * @return bool
      *
      * @throws PersistenceDriverException
      */
-    public function save(Chirp $chirp): Chirp;
+    public function save(Chirp $chirp): bool;
 }

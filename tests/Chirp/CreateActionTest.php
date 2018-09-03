@@ -3,13 +3,15 @@
 namespace Test\Chirp;
 
 use Chirper\Chirp\Chirp;
+use Chirper\Chirp\ChirpCreatedResponse;
 use Chirper\Chirp\ChirpPersistence;
 use Chirper\Chirp\CreateAction;
-use Chirper\Chirp\InvalidJsonException;
+use Chirper\Transform\InvalidJsonException;
 use Chirper\Chirp\JsonChirpTransformer;
 use Chirper\Chirp\UnableToCreateChirpResponse;
 use Chirper\Http\InternalServerErrorResponse;
 use Chirper\Persistence\PersistenceDriverException;
+use Chirper\Transform\TransformerException;
 use Faker\Factory;
 use Faker\Generator;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -93,17 +95,50 @@ class CreateActionTest extends TestCase
         $response = $action->create($request);
         $this->assertInstanceOf(InternalServerErrorResponse::class, $response);
     }
-//
-//    public function testCreateSendsSavedChirpToTransformer()
-//    {
-//
-//    }
-//
-//    public function testCreateReturnsInternalServerErrorResponseOnTransformerException()
-//    {
-//    }
-//
-//    public function testCreateReturnsChirpCreatedResponseOnSuccess()
-//    {
-//    }
+
+    public function testCreateSendsSavedChirpToTransformer()
+    {
+        $request = new Request('POST', 'chirp', [], "");
+        $chirp   = new Chirp($this->faker->uuid,
+                             $this->faker->realText(100),
+                             $this->faker->userName,
+                             new \DateTime());
+
+        $this->transformer->method('toChirp')
+                          ->willReturn($chirp);
+
+        $this->transformer->expects($this->once())
+                          ->method('toJson')
+                          ->with($chirp);
+
+        $action = new CreateAction($this->transformer, $this->persistence);
+        $action->create($request);
+    }
+
+    public function testCreateReturnsInternalServerErrorResponseOnTransformerException()
+    {
+        $request = new Request('POST', 'chirp', [], "");
+
+        $exception = new TransformerException();
+        $this->transformer->method('toChirp')
+                          ->willThrowException($exception);
+
+        $action   = new CreateAction($this->transformer, $this->persistence);
+        $response = $action->create($request);
+        $this->assertInstanceOf(InternalServerErrorResponse::class, $response);
+    }
+
+    public function testCreateReturnsChirpCreatedResponseOnSuccess()
+    {
+        $request      = new Request('POST', 'chirp', [], "");
+        $jsonResponse = '{"somedata":"json_data"}';
+        $this->transformer->method('toJson')
+                          ->willReturn($jsonResponse);
+
+        $action   = new CreateAction($this->transformer, $this->persistence);
+        $response = $action->create($request);
+
+        $this->assertInstanceOf(ChirpCreatedResponse::class, $response);
+        $this->assertEquals($jsonResponse, $response->getBody()->getContents());
+    }
 }

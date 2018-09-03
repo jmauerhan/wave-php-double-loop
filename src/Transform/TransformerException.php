@@ -1,14 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace Chirper\Chirp;
+namespace Chirper\Transform;
 
 use Chirper\Exception;
 use Throwable;
 
-class InvalidJsonException extends Exception
+class TransformerException extends Exception
 {
     public function __construct(string $message = "", Throwable $previous = null)
     {
-        parent::__construct($message, self::INVALID_JSON, $previous);
+        parent::__construct($message, self::TRANSFORMER_EXCEPTION, $previous);
     }
 }

@@ -2,6 +2,9 @@
 
 namespace Chirper\Chirp;
 
+use Chirper\Transform\InvalidJsonException;
+use Chirper\Transform\TransformerException;
+
 interface JsonChirpTransformer
 {
     /**
@@ -11,4 +14,12 @@ interface JsonChirpTransformer
      * @throws InvalidJsonException
      */
     public function toChirp(string $json): Chirp;
+
+    /**
+     * @param Chirp $chirp
+     * @return string
+     *
+     * @throws TransformerException
+     */
+    public function toJson(Chirp $chirp): string;
 }
