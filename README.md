@@ -29,6 +29,7 @@ This tutorial will walk through practicing the Double Loop Workflow to create a 
 - TestCase with Faker
 - Response/Request classes
 - All core classes and test classes with tests commented out
+- remove exception codes
 
 #### Creating Chirps Task
 
