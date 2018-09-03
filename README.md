@@ -25,6 +25,7 @@ This tutorial will walk through practicing the Double Loop Workflow to create a 
 - phinx.yml
 - empty db migrations/seeds folders
 - behat.yml  
+- phpunit.xml
 
 #### Creating Chirps Task
 
@@ -68,7 +69,7 @@ This tutorial will walk through practicing the Double Loop Workflow to create a 
             - Better to pass objects vs primitives, create a Chirp Object
         - Create `Create` Action
             - stub tests:
-                - takes request and passes it to transformer to get Chirp object
+                - takes request and passes data to transformer to get Chirp object
                     - Handle exceptions, means data isn't valid, return error response
                 - sends Chirp to persistence layer
                     - if exception, return error response

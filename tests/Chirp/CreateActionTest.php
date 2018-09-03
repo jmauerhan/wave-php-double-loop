@@ -3,28 +3,38 @@
 namespace Test\Chirp;
 
 use Chirper\Chirp\ChirpPersistence;
+use Chirper\Chirp\CreateAction;
 use Chirper\Chirp\JsonChirpTransformer;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Chirper\Http\Request;
 
-class TestCreateAction extends TestCase
+class CreateActionTest extends TestCase
 {
     /** @var MockObject|JsonChirpTransformer */
-    private $jsonChirpTransformer;
+    private $transformer;
 
     /** @var MockObject|ChirpPersistence */
-    private $chirpPersistence;
+    private $persistence;
 
     public function setUp()
     {
-        $this->jsonChirpTransformer = $this->createMock(JsonChirpTransformer::class);
-        $this->chirpPersistence     = $this->createMock(ChirpPersistence::class);
+        $this->transformer = $this->createMock(JsonChirpTransformer::class);
+        $this->persistence = $this->createMock(ChirpPersistence::class);
         parent::setUp();
     }
 
     public function testCreateSendsRequestToTransformer()
     {
+        $json    = '{"data":"some data"}';
+        $request = new Request('POST', 'chirp', [], $json);
 
+        $this->transformer->expects($this->once())
+                          ->method('toChirp')
+                          ->with($json);
+
+        $action = new CreateAction($this->transformer, $this->persistence);
+        $action->create($request);
     }
 
     public function testCreateReturnsInvalidChirpResponseOnTransformerException()
