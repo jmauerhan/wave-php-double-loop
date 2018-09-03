@@ -33,4 +33,14 @@ class Chirp
     {
         return $this->text;
     }
+
+    public function getAuthor(): string
+    {
+        return $this->author;
+    }
+
+    public function getCreatedAt(): string
+    {
+        return $this->createdAt;
+    }
 }

@@ -11,7 +11,18 @@ class JsonApiChirpTransformer implements JsonChirpTransformer
 
     public function toJson(Chirp $chirp): string
     {
-        return '';
+        $object = (object)[
+            'data' => (object)[
+                'type'       => 'chirp',
+                'id'         => $chirp->getId(),
+                'attributes' => (object)[
+                    'text'       => $chirp->getText(),
+                    'author'     => $chirp->getAuthor(),
+                    'created_at' => $chirp->getCreatedAt()
+                ],
+            ]
+        ];
+        return json_encode($object);
     }
 
     /**

@@ -66,4 +66,34 @@ class JsonApiChirpTransformerTest extends TestCase
             'missingAuthorAttribute' => ['{"data":{"type":"chirp","id":"uuid","attributes":{"text":"sometext"}}}'],
         ];
     }
+
+    public function testToJsonReturnsJsonString()
+    {
+        $uuid   = $this->faker->uuid;
+        $text   = $this->faker->realText(50);
+        $author = $this->faker->userName;
+        $date   = $this->faker->date('Y-m-d H:i:s');
+        $chirp  = new Chirp($uuid, $text, $author, $date);
+
+        $expectedJson =
+            <<<JSON
+            {
+                "data":{
+                    "id":"{$uuid}",
+                    "type":"chirp",
+                    "attributes":{
+                        "text":"{$text}",
+                        "author":"{$author}",
+                        "created_at":"{$date}"
+                    }
+                }
+            }
+JSON;
+
+        $transformer = new JsonApiChirpTransformer();
+        $json        = $transformer->toJson($chirp);
+
+        $this->assertJsonStringEqualsJsonString($expectedJson, $json);
+
+    }
 }
