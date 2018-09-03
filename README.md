@@ -28,6 +28,7 @@ This tutorial will walk through practicing the Double Loop Workflow to create a 
 - phpunit.xml
 - TestCase with Faker
 - Response/Request classes
+- All core classes and test classes with tests commented out
 
 #### Creating Chirps Task
 
@@ -80,4 +81,6 @@ This tutorial will walk through practicing the Double Loop Workflow to create a 
                     - if success, return chirp created response 
             - fill in tests, finish Action class
     - Fill in JsonApiTransformer Tests & Class
+        - To chirp success
+        - To chirp failures
             

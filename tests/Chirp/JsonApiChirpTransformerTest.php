@@ -14,8 +14,6 @@ class JsonApiChirpTransformerTest extends TestCase
         $chirpText = $this->faker->realText(50);
         $author    = $this->faker->userName;
 
-        $now = new \DateTime();
-
         $attributes = (object)[
             "text"   => $chirpText,
             "author" => $author
@@ -28,6 +26,7 @@ class JsonApiChirpTransformerTest extends TestCase
 
         $json = json_encode((object)['data' => $data]);
 
+        $now           = (new \DateTime())->format('Y-m-d H:i:s');
         $expectedChirp = new Chirp($uuid, $chirpText, $author, $now);
 
         $transformer = new JsonApiChirpTransformer();

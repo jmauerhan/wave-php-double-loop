@@ -26,6 +26,12 @@ class JsonApiChirpTransformer implements JsonChirpTransformer
      */
     public function toChirp(string $json): Chirp
     {
+        $data   = (json_decode($json))->data;
+        $uuid   = $data->id;
+        $author = $data->attributes->author;
+        $text   = $data->attributes->text;
+        $time   = (new \DateTime())->format('Y-m-d H:i:s');
 
+        return new Chirp($uuid, $text, $author, $time);
     }
 }

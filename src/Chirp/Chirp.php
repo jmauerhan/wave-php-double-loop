@@ -13,10 +13,10 @@ class Chirp
     /** @var string */
     private $author;
 
-    /** @var \DateTime */
+    /** @var string */
     private $createdAt;
 
-    public function __construct(string $id, string $text, string $author, \DateTime $createdAt)
+    public function __construct(string $id, string $text, string $author, string $createdAt)
     {
         $this->id        = $id;
         $this->text      = $text;

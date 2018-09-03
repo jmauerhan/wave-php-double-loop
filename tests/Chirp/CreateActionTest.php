@@ -70,7 +70,7 @@ class CreateActionTest extends TestCase
         $chirp   = new Chirp($this->faker->uuid,
                              $this->faker->realText(100),
                              $this->faker->userName,
-                             new \DateTime());
+                             $this->faker->date('Y-m-d H:i:s'));
 
         $this->transformer->method('toChirp')
                           ->willReturn($chirp);
@@ -102,7 +102,7 @@ class CreateActionTest extends TestCase
         $chirp   = new Chirp($this->faker->uuid,
                              $this->faker->realText(100),
                              $this->faker->userName,
-                             new \DateTime());
+                             $this->faker->date('Y-m-d H:i:s'));
 
         $this->transformer->method('toChirp')
                           ->willReturn($chirp);
