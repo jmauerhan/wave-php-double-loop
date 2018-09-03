@@ -7,11 +7,12 @@ services:
     volumes:
       - ./:/var/www
     environment:
-      - ISSUE_DB_HOST=db
-      - ISSUE_DB_PORT=5432
-      - ISSUE_DB_NAME=chirper
-      - ISSUE_DB_USER=postgres
-      - ISSUE_DB_PASSWORD=postgres
+      - DB_ENGINE=pgsql
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=chirper
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
     ports:
       - "3000:80"
   db:
