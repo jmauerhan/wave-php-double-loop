@@ -26,6 +26,8 @@ This tutorial will walk through practicing the Double Loop Workflow to create a 
 - empty db migrations/seeds folders
 - behat.yml  
 - phpunit.xml
+- TestCase with Faker
+- Response/Request classes
 
 #### Creating Chirps Task
 
@@ -76,4 +78,6 @@ This tutorial will walk through practicing the Double Loop Workflow to create a 
                 - If successful, transform saved Chirp back to json
                     - if error, return an internal server error
                     - if success, return chirp created response 
-            - fill in tests
+            - fill in tests, finish Action class
+    - Fill in JsonApiTransformer Tests & Class
+            

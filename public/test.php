@@ -17,7 +17,7 @@ $obj   = (object)[
 $id        = $obj->data->id;
 $text      = $obj->data->attributes->text;
 $author    = $obj->data->attributes->author;
-$createdAt = (new DateTime())->format('Y-m-d H:i:se');
+$createdAt = (new DateTime())->format('Y-m-d H:i:s+e');
 
 //Save it
 $dsn    = 'pgsql:dbname=chirper;host=db';

@@ -16,7 +16,8 @@
     "guzzlehttp/psr7": "^1.4",
     "ramsey/uuid": "^3.8",
     "robmorgan/phinx": "^0.10.6",
-    "phpunit/phpunit": "^7.3"
+    "phpunit/phpunit": "^7.3",
+    "league/fractal": "^0.17.0"
   },
   "require-dev": {
     "behat/behat": "^3.5",
