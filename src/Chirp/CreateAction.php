@@ -23,7 +23,8 @@ class CreateAction
     {
         $json = $request->getBody()->getContents();
         try {
-            $this->transformer->toChirp($json);
+            $chirp = $this->transformer->toChirp($json);
+            $this->persistence->save($chirp);
         } catch (InvalidJsonException $invalidJsonException) {
             return new UnableToCreateChirpResponse($invalidJsonException->getMessage());
         }
