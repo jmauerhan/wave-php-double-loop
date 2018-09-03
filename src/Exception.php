@@ -6,5 +6,6 @@ use \Exception AS CoreException;
 
 class Exception extends CoreException
 {
-    const INVALID_JSON = 100;
+    const INVALID_JSON       = 100;
+    const PERSISTENCE_DRIVER = 200;
 }

@@ -8,6 +8,8 @@ use Chirper\Chirp\CreateAction;
 use Chirper\Chirp\InvalidJsonException;
 use Chirper\Chirp\JsonChirpTransformer;
 use Chirper\Chirp\UnableToCreateChirpResponse;
+use Chirper\Http\InternalServerErrorResponse;
+use Chirper\Persistence\PersistenceDriverException;
 use Faker\Factory;
 use Faker\Generator;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -63,7 +65,10 @@ class CreateActionTest extends TestCase
     public function testCreateSendsChirpToPersistence()
     {
         $request = new Request('POST', 'chirp', [], "");
-        $chirp   = new Chirp($this->faker->uuid, $this->faker->realText(100), $this->faker->userName, new \DateTime());
+        $chirp   = new Chirp($this->faker->uuid,
+                             $this->faker->realText(100),
+                             $this->faker->userName,
+                             new \DateTime());
 
         $this->transformer->method('toChirp')
                           ->willReturn($chirp);
@@ -75,10 +80,19 @@ class CreateActionTest extends TestCase
         $action = new CreateAction($this->transformer, $this->persistence);
         $action->create($request);
     }
-//
-//    public function testCreateReturnsInternalErrorResponseOnPersistenceException()
-//    {
-//    }
+
+    public function testCreateReturnsInternalErrorResponseOnPersistenceException()
+    {
+        $request = new Request('POST', 'chirp', [], "");
+
+        $exception = new PersistenceDriverException();
+        $this->persistence->method('save')
+                          ->willThrowException($exception);
+
+        $action   = new CreateAction($this->transformer, $this->persistence);
+        $response = $action->create($request);
+        $this->assertInstanceOf(InternalServerErrorResponse::class, $response);
+    }
 //
 //    public function testCreateSendsSavedChirpToTransformer()
 //    {
