@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Test\Chirp;
+namespace Test\Unit\Chirp;
 
 use Chirper\Chirp\Chirp;
 use Chirper\Chirp\JsonApiChirpTransformer;
@@ -94,6 +94,5 @@ JSON;
         $json        = $transformer->toJson($chirp);
 
         $this->assertJsonStringEqualsJsonString($expectedJson, $json);
-
     }
 }
