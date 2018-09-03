@@ -14,6 +14,13 @@ class JsonApiChirpTransformer implements JsonChirpTransformer
         return '';
     }
 
+    /**
+     * @param string $json
+     * @return Chirp
+     *
+     * @throws InvalidJsonApiException
+     * @throws InvalidJsonException
+     */
     public function toChirp(string $json): Chirp
     {
         //Validate
