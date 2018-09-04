@@ -12,7 +12,10 @@ class CreateChirpTest extends TestCase
 
     public function testValidPostReturnsSuccessfulResponse()
     {
-        $attributes = (object)['text' => 'This is a new Chirp'];
+        $attributes = (object)[
+            'text'   => $this->faker->realText(50),
+            'author' => $this->faker->userName
+        ];
         $data       = (object)[
             'type'       => 'chirp',
             'id'         => Uuid::uuid4(),
@@ -21,11 +24,20 @@ class CreateChirpTest extends TestCase
         $object     = (object)['data' => $data];
         $payload    = json_encode($object);
 
-        $guzzle   = new Client(['base_uri' => $this->host]);
-        $opt      = ['body' => $payload];
+        $expected        = $object;
+        $expected->data
+            ->attributes
+            ->created_at = (new \DateTime())->format('Y-m-d H:i:s');
+        $expected        = json_encode($expected);
+
+        $guzzle = new Client(['base_uri' => $this->host]);
+        $opt    = ['body' => $payload];
+
         $response = $guzzle->post('chirp', $opt);
         $this->assertEquals(201, $response->getStatusCode());
-        $this->assertEquals($payload, $response->getBody()->getContents());
+        $this->assertJsonStringEqualsJsonString(
+            $expected,
+            $response->getBody()->getContents());
 
     }
 }
