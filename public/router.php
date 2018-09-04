@@ -21,10 +21,10 @@ $pdo = new PDO($dsn, $dbUser, $dbPass);
 
 $app->post('chirp',
     function (SilexRequest $silexRequest) use ($app, $pdo) {
-
-        $transformer = new \Chirper\Chirp\JsonApiChirpTransformer();
-        $driver      = new \Chirper\Chirp\PdoPersistenceDriver($pdo);
-        $action      = new \Chirper\Chirp\CreateAction($transformer, $driver);
+        $requestValidator = new \Chirper\Chirp\CreateRequestValidator();
+        $transformer      = new \Chirper\Chirp\JsonApiChirpTransformer($requestValidator);
+        $driver           = new \Chirper\Chirp\PdoPersistenceDriver($pdo);
+        $action           = new \Chirper\Chirp\CreateAction($transformer, $driver);
 
         $request = new \Chirper\Http\Request($silexRequest->getMethod(),
                                              $silexRequest->getUri(),

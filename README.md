@@ -18,6 +18,7 @@ This tutorial will walk through practicing the Double Loop Workflow to create a 
   
 #### Info
 - [JSON API](http://jsonapi.org/) - Our API will be implementing JSON API
+- [UUID Generator](https://www.uuidgenerator.net/) - You may want this during testing
 
 ### Outline
 

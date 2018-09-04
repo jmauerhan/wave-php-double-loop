@@ -6,8 +6,8 @@ use Chirper\Http\InternalServerErrorResponse;
 use Chirper\Http\Request;
 use Chirper\Http\Response;
 use Chirper\Persistence\PersistenceDriverException;
-use Chirper\Transform\InvalidJsonException;
-use Chirper\Transform\TransformerException;
+use Chirper\Json\InvalidJsonException;
+use Chirper\Json\TransformerException;
 
 class CreateAction
 {
@@ -34,9 +34,9 @@ class CreateAction
         } catch (InvalidJsonException $invalidJsonException) {
             return new UnableToCreateChirpResponse($invalidJsonException->getMessage());
         } catch (PersistenceDriverException $persistenceDriverException) {
-            return new InternalServerErrorResponse();
+            return new InternalServerErrorResponse($persistenceDriverException->getMessage());
         } catch (TransformerException $transformerException) {
-            return new InternalServerErrorResponse();
+            return new InternalServerErrorResponse($transformerException->getMessage());
         }
     }
 }

@@ -2,8 +2,8 @@
 
 namespace Chirper\Chirp;
 
-use Chirper\Transform\InvalidJsonException;
-use Chirper\Transform\TransformerException;
+use Chirper\Json\InvalidJsonException;
+use Chirper\Json\TransformerException;
 
 interface JsonChirpTransformer
 {

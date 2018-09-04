@@ -4,8 +4,8 @@ namespace Test\Unit\Chirp;
 
 use Chirper\Chirp\Chirp;
 use Chirper\Chirp\JsonApiChirpTransformer;
-use Chirper\Transform\InvalidJsonApiException;
-use Chirper\Transform\InvalidJsonException;
+use Chirper\Json\InvalidJsonApiException;
+use Chirper\Json\InvalidJsonException;
 use Test\TestCase;
 
 class JsonApiChirpTransformerTest extends TestCase

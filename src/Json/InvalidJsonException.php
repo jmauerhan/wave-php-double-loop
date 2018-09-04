@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Chirper\Transform;
+namespace Chirper\Json;
 
 use Chirper\Exception;
 use Chirper\Http\Response;

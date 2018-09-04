@@ -2,12 +2,19 @@
 
 namespace Chirper\Chirp;
 
-use Chirper\Transform\InvalidJsonApiException;
-use Chirper\Transform\InvalidJsonException;
-use Chirper\Transform\TransformerException;
+use Chirper\Http\RequestValidator;
+use Chirper\Json\InvalidJsonApiException;
+use Chirper\Json\InvalidJsonException;
 
 class JsonApiChirpTransformer implements JsonChirpTransformer
 {
+    private $validator;
+
+    public function __construct(RequestValidator $requestValidator)
+    {
+        $this->validator = $requestValidator;
+    }
+
     public function toJson(Chirp $chirp): string
     {
         $object = (object)[
@@ -33,24 +40,14 @@ class JsonApiChirpTransformer implements JsonChirpTransformer
      */
     public function toChirp(string $json): Chirp
     {
-        //Validate
-        $object = json_decode($json);
-        if ($object === null) {
-            throw new InvalidJsonException();
+        if ($this->validator->isValid($json) === false) {
+            $errors = $this->validator->getErrors($json);
+            throw new InvalidJsonApiException($errors);
         }
-        $this->checkRequiredProperty($object, 'data', 'data');
-        $data = $object->data;
 
-        $keys = ['type', 'id', 'attributes'];
-        foreach ($keys AS $key) {
-            $this->checkRequiredProperty($data, $key, 'data->' . $key);
-        }
+        $object     = json_decode($json);
+        $data       = $object->data;
         $attributes = $data->attributes;
-
-        $keys = ['text', 'author'];
-        foreach ($keys AS $key) {
-            $this->checkRequiredProperty($attributes, $key, 'data->attributes->' . $key);
-        }
 
         $uuid   = $data->id;
         $text   = $attributes->text;
@@ -58,12 +55,5 @@ class JsonApiChirpTransformer implements JsonChirpTransformer
         $time   = (new \DateTime())->format('Y-m-d H:i:s');
 
         return new Chirp($uuid, $text, $author, $time);
-    }
-
-    private function checkRequiredProperty($object, $property, $key)
-    {
-        if (property_exists($object, $property) === false) {
-            throw new InvalidJsonApiException([$key => 'Missing Data']);
-        }
     }
 }

@@ -34,7 +34,7 @@ class PdoPersistenceDriver implements PersistenceDriver
             ];
             $result = $stmt->execute($values);
             if ($result === false) {
-                throw new PersistenceDriverException();
+                throw new PersistenceDriverException(implode($stmt->errorInfo()));
             }
             return true;
         } catch (\PDOException $PDOException) {
