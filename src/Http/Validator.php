@@ -2,8 +2,10 @@
 
 namespace Chirper\Http;
 
-interface RequestValidator
+interface Validator
 {
+    public function setRules(array $rules): void;
+
     public function isValid(string $json): bool;
 
     public function getErrors(string $json): array;

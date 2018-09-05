@@ -55,7 +55,7 @@ class CreateActionTest extends TestCase
         $json    = '{"data":"some data"}';
         $request = new Request('POST', 'chirp', [], $json);
 
-        $exception = new InvalidJsonException("Missing id field");
+        $exception = new InvalidJsonException([]);
         $this->transformer->method('toChirp')
                           ->willThrowException($exception);
 

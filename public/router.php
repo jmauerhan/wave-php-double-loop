@@ -19,12 +19,14 @@ $dbPass   = env('DB_PASSWORD');
 $dsn = "{$dbEngine}:dbname={$dbName};host={$dbHost};port={$dbPort}";
 $pdo = new PDO($dsn, $dbUser, $dbPass);
 
+$valitron  = new \Valitron\Validator();
+$validator = new \Chirper\Http\ValitronValidator($valitron);
+
 $app->post('chirp',
-    function (SilexRequest $silexRequest) use ($app, $pdo) {
-        $requestValidator = new \Chirper\Chirp\CreateRequestValidator();
-        $transformer      = new \Chirper\Chirp\JsonApiChirpTransformer($requestValidator);
-        $driver           = new \Chirper\Chirp\PdoPersistenceDriver($pdo);
-        $action           = new \Chirper\Chirp\CreateAction($transformer, $driver);
+    function (SilexRequest $silexRequest) use ($app, $pdo, $validator) {
+        $transformer = new \Chirper\Chirp\JsonApiChirpTransformer($validator);
+        $driver      = new \Chirper\Chirp\PdoPersistenceDriver($pdo);
+        $action      = new \Chirper\Chirp\CreateAction($transformer, $driver);
 
         $request = new \Chirper\Http\Request($silexRequest->getMethod(),
                                              $silexRequest->getUri(),

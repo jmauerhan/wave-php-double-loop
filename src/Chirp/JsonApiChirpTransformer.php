@@ -2,17 +2,34 @@
 
 namespace Chirper\Chirp;
 
-use Chirper\Http\RequestValidator;
+
+use Chirper\Http\Validator;
 use Chirper\Json\InvalidJsonApiException;
 use Chirper\Json\InvalidJsonException;
 
 class JsonApiChirpTransformer implements JsonChirpTransformer
 {
+    /**
+     * @var Validator
+     */
     private $validator;
 
-    public function __construct(RequestValidator $requestValidator)
+    /**
+     * @var array
+     */
+    private $rules = [
+        'data'                   => ['required'],
+        'data.id'                => ['required', 'uuid'],
+        'data.type'              => ['required', ['in', ['chirp']]],
+        'data.attributes'        => ['required'],
+        'data.attributes.text'   => ['required', ['lengthMax', 100]],
+        'data.attributes.author' => ['required', ['lengthMax', 200]]
+    ];
+
+    public function __construct(Validator $validator)
     {
-        $this->validator = $requestValidator;
+        $this->validator = $validator;
+        $this->validator->setRules($this->rules);
     }
 
     public function toJson(Chirp $chirp): string

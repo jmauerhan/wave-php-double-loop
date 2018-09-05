@@ -2,11 +2,10 @@
 
 namespace Chirper\Json;
 
-use Chirper\Exception;
 use Chirper\Http\Response;
 use Throwable;
 
-class InvalidJsonException extends Exception
+class InvalidJsonException extends \Exception
 {
     public function __construct(array $errors = null, Throwable $previous = null)
     {
