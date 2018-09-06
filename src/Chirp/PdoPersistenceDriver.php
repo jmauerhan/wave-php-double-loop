@@ -41,4 +41,26 @@ class PdoPersistenceDriver implements PersistenceDriver
             throw new PersistenceDriverException($PDOException->getMessage());
         }
     }
+
+    /**
+     * @return ChirpCollection
+     *
+     * @throws PersistenceDriverException
+     */
+    public function getAll(): ChirpCollection
+    {
+        $sql  = "SELECT * FROM chirp ORDER BY created_at DESC";
+        $stmt = $this->pdo->query($sql);
+        if ($stmt === false) {
+            $errors = $this->pdo->errorInfo() ?? [];
+            throw new PersistenceDriverException(implode($errors));
+        }
+
+        $chirps = $stmt->fetchAll(\PDO::FETCH_CLASS,
+                                  Chirp::class,
+                                  ['id', 'chirp_text', 'author', 'created_at']
+        );
+
+        return new ChirpCollection($chirps);
+    }
 }

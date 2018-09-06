@@ -25,13 +25,15 @@ $dbUser = 'postgres';
 $dbPass = 'postgres';
 $pdo    = new PDO($dsn, $dbUser, $dbPass);
 
-$sql          = "INSERT INTO chirp(id, chirp_text, author, created_at)
-VALUES(:id, :chirp_text, :author, :created_at)";
-$values       = ['id' => $id, 'chirp_text' => $text, 'author' => $author, 'created_at' => $createdAt];
-$preparedStmt = $pdo->prepare($sql);
-$result       = $preparedStmt->execute($values);
+//$sql          = "INSERT INTO chirp(id, chirp_text, author, created_at)
+//VALUES(:id, :chirp_text, :author, :created_at)";
+//$values       = ['id' => $id, 'chirp_text' => $text, 'author' => $author, 'created_at' => $createdAt];
+//$preparedStmt = $pdo->prepare($sql);
+//$result       = $preparedStmt->execute($values);
 
 //Get the chirps out to see
 $sql    = "SELECT * FROM chirp ORDER BY created_at DESC";
 $result = $pdo->query($sql);
-var_dump($result->fetchAll(PDO::FETCH_ASSOC));
+var_dump($result->fetchAll(PDO::FETCH_CLASS,
+                           \Chirper\Chirp\Chirp::class,
+                           ['id', 'chirp_text', 'author', 'created_at']));

@@ -3,6 +3,7 @@
 namespace Test\Unit\Chirp;
 
 use Chirper\Chirp\Chirp;
+use Chirper\Chirp\ChirpCollection;
 use Chirper\Persistence\PersistenceDriverException;
 use Chirper\Chirp\PdoPersistenceDriver;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -103,4 +104,66 @@ class PdoPersistenceDriverTest extends TestCase
         $this->assertTrue($driver->save($this->chirp));
     }
 
+    public function testGetAllExecutesQuery()
+    {
+        $sql       = "SELECT * FROM chirp ORDER BY created_at DESC";
+        $statement = $this->createMock(\PDOStatement::class);
+        $statement->method('fetchAll')
+                  ->willReturn([]);
+        $this->pdo->expects($this->once())
+                  ->method('query')
+                  ->with($sql)
+                  ->willReturn($statement);
+        $driver = new PdoPersistenceDriver($this->pdo);
+        $driver->getAll();
+    }
+
+    public function testGetAllThrowsExceptionWhenQueryReturnsFalse()
+    {
+        $this->expectException(PersistenceDriverException::class);
+        $this->pdo->method('query')
+                  ->willReturn(false);
+        $driver = new PdoPersistenceDriver($this->pdo);
+        $driver->getAll();
+    }
+
+    public function testGetAllFetchesAllAsChirps()
+    {
+        $statement = $this->createMock(\PDOStatement::class);
+        $statement->expects($this->once())
+                  ->method('fetchAll')
+                  ->with(\PDO::FETCH_CLASS, Chirp::class, ['id', 'chirp_text', 'author', 'created_at'])
+                  ->willReturn([]);
+
+        $this->pdo->method('query')
+                  ->willReturn($statement);
+
+        $driver = new PdoPersistenceDriver($this->pdo);
+        $driver->getAll();
+    }
+
+    public function testGetAllReturnsChirpCollection()
+    {
+        $chirps = [];
+        for ($i = 0; $i < 3; $i++) {
+            $uuid      = $this->faker->uuid;
+            $chirpText = $this->faker->realText(50);
+            $author    = $this->faker->userName;
+            $now       = (new \DateTime())->format('Y-m-d H:i:s');
+            $chirps[]  = new Chirp($uuid, $chirpText, $author, $now);
+        }
+
+        $collection = new ChirpCollection($chirps);
+
+        $statement = $this->createMock(\PDOStatement::class);
+        $statement->method('fetchAll')
+                  ->willReturn($chirps);
+
+        $this->pdo->method('query')
+                  ->willReturn($statement);
+
+        $driver = new PdoPersistenceDriver($this->pdo);
+        $this->assertEquals($collection, $driver->getAll());
+
+    }
 }
