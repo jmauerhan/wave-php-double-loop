@@ -2,8 +2,7 @@
 
 namespace Chirper\Chirp;
 
-
-use Chirper\Http\Validator;
+use Chirper\Http\Validation\Validator;
 use Chirper\Json\InvalidJsonApiException;
 use Chirper\Json\InvalidJsonException;
 

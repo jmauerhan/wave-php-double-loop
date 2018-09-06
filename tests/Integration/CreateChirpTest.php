@@ -24,20 +24,20 @@ class CreateChirpTest extends TestCase
         $object     = (object)['data' => $data];
         $payload    = json_encode($object);
 
-        $expected        = $object;
-        $expected->data
-            ->attributes
-            ->created_at = (new \DateTime())->format('Y-m-d H:i:s');
-        $expected        = json_encode($expected);
-
         $guzzle = new Client(['base_uri' => $this->host]);
         $opt    = ['body' => $payload];
 
         $response = $guzzle->post('chirp', $opt);
         $this->assertEquals(201, $response->getStatusCode());
-        $this->assertJsonStringEqualsJsonString(
-            $expected,
-            $response->getBody()->getContents());
+        $responseJson = $response->getBody()->getContents();
+        $this->assertJson($responseJson);
+        $responseObject = json_decode($responseJson);
+        $this->assertObjectHasAttribute('data', $responseObject);
+        $this->assertObjectHasAttribute('attributes', $responseObject->data);
+        $this->assertObjectHasAttribute('created_at', $responseObject->data->attributes);
+        $this->assertNotNull($responseObject->data->attributes->created_at);
 
+        unset($responseObject->data->attributes->created_at);
+        $this->assertEquals($data, $responseObject->data);
     }
 }

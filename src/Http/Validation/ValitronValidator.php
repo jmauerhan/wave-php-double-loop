@@ -1,7 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Chirper\Http;
+namespace Chirper\Http\Validation;
 
+use Chirper\Http\Validation\Validator;
 use Valitron\Validator AS Valitron;
 use Ramsey\Uuid\Uuid;
 

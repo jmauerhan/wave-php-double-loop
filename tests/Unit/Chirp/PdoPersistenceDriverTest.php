@@ -85,6 +85,8 @@ class PdoPersistenceDriverTest extends TestCase
         $statement = $this->createMock(\PDOStatement::class);
         $statement->method('execute')
                   ->willReturn(false);
+        $statement->method('errorInfo')
+                  ->willReturn(['errors']);
         $this->pdo->method('prepare')
                   ->willReturn($statement);
         $driver = new PdoPersistenceDriver($this->pdo);

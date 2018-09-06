@@ -20,7 +20,7 @@ $dsn = "{$dbEngine}:dbname={$dbName};host={$dbHost};port={$dbPort}";
 $pdo = new PDO($dsn, $dbUser, $dbPass);
 
 $valitron  = new \Valitron\Validator();
-$validator = new \Chirper\Http\ValitronValidator($valitron);
+$validator = new \Chirper\Http\Validation\ValitronValidator($valitron);
 
 $app->post('chirp',
     function (SilexRequest $silexRequest) use ($app, $pdo, $validator) {

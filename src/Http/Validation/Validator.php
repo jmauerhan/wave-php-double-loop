@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Chirper\Http;
+namespace Chirper\Http\Validation;
 
 interface Validator
 {

@@ -2,13 +2,12 @@
 
 namespace Chirper\Json;
 
-use Chirper\Exception;
 use Throwable;
 
-class TransformerException extends Exception
+class TransformerException extends \Exception
 {
     public function __construct(string $message = "", Throwable $previous = null)
     {
-        parent::__construct($message, self::TRANSFORMER_EXCEPTION, $previous);
+        parent::__construct($message, 0, $previous);
     }
 }

@@ -5,9 +5,9 @@ namespace Chirper\Chirp;
 use Chirper\Http\InternalServerErrorResponse;
 use Chirper\Http\Request;
 use Chirper\Http\Response;
-use Chirper\Persistence\PersistenceDriverException;
 use Chirper\Json\InvalidJsonException;
 use Chirper\Json\TransformerException;
+use Chirper\Persistence\PersistenceDriverException;
 
 class CreateAction
 {
