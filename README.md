@@ -82,12 +82,21 @@ This tutorial will walk through practicing the Double Loop Workflow to create a 
                     - if error, return an internal server error
                     - if success, return chirp created response 
             - fill in tests, finish Action class
-    - Fill in JsonApiTransformer Tests & Class
+    - Fill in JsonApiTransformer Tests & Class with simple validation version
         - To chirp success
         - To chirp failures
             - Refactor Checks
         - toJson: `assertJsonStringEqualsJsonString`
-    - Fill in Validator Tests
     - Persistence Layer
-        - 
+        - Fill in PDO Persistence Layer Tests
+    - Wire up everything in the router.
+        - Design Integration Test for Route.
+
+#### Run Behavior Test
+    
+#### Add Unit Tests
+    - Create Unit Test for Timeline Action
+        - Needs to get all Chirps from DB
+        - Return Response
+    
             

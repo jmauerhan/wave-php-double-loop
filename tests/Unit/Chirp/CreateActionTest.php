@@ -15,8 +15,8 @@ use Chirper\Json\TransformerException;
 use Faker\Factory;
 use Faker\Generator;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
 use Chirper\Http\Request;
+use Test\TestCase;
 
 class CreateActionTest extends TestCase
 {
@@ -26,14 +26,10 @@ class CreateActionTest extends TestCase
     /** @var MockObject|PersistenceDriver */
     private $persistence;
 
-    /** @var Generator */
-    private $faker;
-
     public function setUp()
     {
         $this->transformer = $this->createMock(JsonChirpTransformer::class);
         $this->persistence = $this->createMock(PersistenceDriver::class);
-        $this->faker       = Factory::create();
         parent::setUp();
     }
 

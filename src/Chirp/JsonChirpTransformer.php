@@ -22,4 +22,12 @@ interface JsonChirpTransformer
      * @throws TransformerException
      */
     public function toJson(Chirp $chirp): string;
+
+    /**
+     * @param ChirpCollection $chirpCollection
+     * @return string
+     *
+     * @throws TransformerException
+     */
+    public function collectionToJson(ChirpCollection $chirpCollection): string;
 }

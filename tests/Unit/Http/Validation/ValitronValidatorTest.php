@@ -54,21 +54,21 @@ class ValitronValidatorTest extends TestCase
         $this->assertTrue($validator->isValid($json));
     }
 
-    public function testUuidRuleAdded()
+    public function testGetErrorsReturnsEmptyArrayForValidData()
     {
-        $this->valitron->expects($this->once())
-                       ->method('addInstanceRule')
-                       ->with('uuid', $this->anything());
-
-        new ValitronValidator($this->valitron);
+        $json = '{"data":"some-data"}';
+        $this->valitron->method('validate')->willReturn(true);
+        $this->valitron->method('withData')->willReturnSelf();
+        $validator = new ValitronValidator($this->valitron);
+        $this->assertEquals([], $validator->getErrors($json));
     }
 
-    public function testUuidRuleWorks()
+    public function testGetErrorsReturnsFlattenedArrayOfErrorsPer()
     {
-        $this->valitron->mapFieldRules('field', 'uuid');
+        $json = '{"data":"some-data"}';
+        $this->valitron->method('validate')->willReturn(true);
+        $this->valitron->method('withData')->willReturnSelf();
         $validator = new ValitronValidator($this->valitron);
-        $json      = '{"field":"abc"}';
-
-
+        $this->assertEquals([], $validator->getErrors($json));
     }
 }
