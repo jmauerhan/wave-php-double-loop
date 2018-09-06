@@ -3,6 +3,7 @@
 namespace Test\Unit\Chirp;
 
 use Chirper\Chirp\Chirp;
+use Chirper\Chirp\ChirpCollection;
 use Chirper\Chirp\JsonApiChirpTransformer;
 use Chirper\Http\Validation\Validator;
 use Chirper\Json\InvalidJsonApiException;
@@ -111,6 +112,34 @@ JSON;
         $transformer = new JsonApiChirpTransformer($this->validator);
         $json        = $transformer->toJson($chirp);
 
+        $this->assertJsonStringEqualsJsonString($expectedJson, $json);
+    }
+
+    public function testCollectionToJsonReturnsJsonWithAllChirps()
+    {
+        $chirps       = [];
+        $expectedData = [];
+        for ($i = 0; $i < 3; $i++) {
+            $uuid      = $this->faker->uuid;
+            $chirpText = $this->faker->realText(50);
+            $author    = $this->faker->userName;
+            $now       = (new \DateTime())->format('Y-m-d H:i:s');
+            $chirps[]  = new Chirp($uuid, $chirpText, $author, $now);
+
+            $expectedData[] = (object)[
+                "type"       => "chirp",
+                "id"         => $uuid,
+                "attributes" => (object)[
+                    "text"       => $chirpText,
+                    "author"     => $author,
+                    "created_at" => $now,
+                ]
+            ];
+        }
+        $chirpCollection = new ChirpCollection($chirps);
+        $expectedJson    = json_encode((object)['data' => $expectedData]);
+        $transformer     = new JsonApiChirpTransformer($this->validator);
+        $json            = $transformer->collectionToJson($chirpCollection);
         $this->assertJsonStringEqualsJsonString($expectedJson, $json);
     }
 }
