@@ -16,7 +16,7 @@ class ValitronValidator implements Validator
     public function __construct(Valitron $valitron)
     {
         $this->valitron = $valitron;
-        Valitron::addRule(
+        $this->valitron->addInstanceRule(
             'uuid',
             function ($field, $value) {
                 return Uuid::isValid($value);
