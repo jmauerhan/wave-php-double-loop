@@ -22,11 +22,12 @@ $pdo = new PDO($dsn, $dbUser, $dbPass);
 $valitron  = new \Valitron\Validator();
 $validator = new \Chirper\Http\Validation\ValitronValidator($valitron);
 
+$transformer = new \Chirper\Chirp\JsonApiChirpTransformer($validator);
+
 $app->post('chirp',
-    function (SilexRequest $silexRequest) use ($app, $pdo, $validator) {
-        $transformer = new \Chirper\Chirp\JsonApiChirpTransformer($validator);
-        $driver      = new \Chirper\Chirp\PdoPersistenceDriver($pdo);
-        $action      = new \Chirper\Chirp\CreateAction($transformer, $driver);
+    function (SilexRequest $silexRequest) use ($app, $pdo, $transformer) {
+        $driver = new \Chirper\Chirp\PdoPersistenceDriver($pdo);
+        $action = new \Chirper\Chirp\CreateAction($transformer, $driver);
 
         $request = new \Chirper\Http\Request($silexRequest->getMethod(),
                                              $silexRequest->getUri(),
@@ -41,4 +42,15 @@ $app->post('chirp',
                                  $response->getHeaders());
     });
 
+$app->get('',
+    function (SilexRequest $silexRequest) use ($app, $pdo, $transformer) {
+        $driver   = new \Chirper\Chirp\PdoPersistenceDriver($pdo);
+        $action   = new \Chirper\Chirp\GetTimelineAction($transformer, $driver);
+        $response = $action->getAll();
+
+        return new SilexResponse($response->getBody()->getContents(),
+                                 $response->getStatusCode(),
+                                 $response->getHeaders());
+    }
+);
 $app->run();

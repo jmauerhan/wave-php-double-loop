@@ -80,6 +80,7 @@ class JsonApiChirpTransformer implements JsonChirpTransformer
     public function collectionToJson(ChirpCollection $chirpCollection): string
     {
         $data = [];
+        /** @var Chirp $chirp */
         foreach ($chirpCollection AS $chirp) {
             $data[] = (object)[
                 'type'       => 'chirp',

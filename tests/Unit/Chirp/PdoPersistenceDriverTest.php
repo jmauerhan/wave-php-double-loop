@@ -19,14 +19,15 @@ class PdoPersistenceDriverTest extends TestCase
 
     public function setUp()
     {
+        parent::setUp();
+
         $this->pdo = $this->createMock(\PDO::class);
 
         $uuid        = $this->faker->uuid;
-        $text        = $this->faker->realText(50);
+        $text        = $this->faker->text(50);
         $author      = $this->faker->userName;
         $date        = $this->faker->date('Y-m-d H:i:s');
         $this->chirp = new Chirp($uuid, $text, $author, $date);
-        parent::setUp();
     }
 
     public function testSavePreparesStatement()
@@ -58,7 +59,7 @@ class PdoPersistenceDriverTest extends TestCase
     public function testSaveExecutesStatement()
     {
         $uuid   = $this->faker->uuid;
-        $text   = $this->faker->realText(50);
+        $text   = $this->faker->text(50);
         $author = $this->faker->userName;
         $date   = $this->faker->date('Y-m-d H:i:s');
         $chirp  = new Chirp($uuid, $text, $author, $date);
@@ -106,7 +107,7 @@ class PdoPersistenceDriverTest extends TestCase
 
     public function testGetAllExecutesQuery()
     {
-        $sql       = "SELECT * FROM chirp ORDER BY created_at DESC";
+        $sql       = "SELECT id, chirp_text, author, created_at FROM chirp ORDER BY created_at DESC";
         $statement = $this->createMock(\PDOStatement::class);
         $statement->method('fetchAll')
                   ->willReturn([]);
@@ -127,43 +128,30 @@ class PdoPersistenceDriverTest extends TestCase
         $driver->getAll();
     }
 
-    public function testGetAllFetchesAllAsChirps()
-    {
-        $statement = $this->createMock(\PDOStatement::class);
-        $statement->expects($this->once())
-                  ->method('fetchAll')
-                  ->with(\PDO::FETCH_CLASS, Chirp::class, ['id', 'chirp_text', 'author', 'created_at'])
-                  ->willReturn([]);
-
-        $this->pdo->method('query')
-                  ->willReturn($statement);
-
-        $driver = new PdoPersistenceDriver($this->pdo);
-        $driver->getAll();
-    }
-
+    /** @group realtext */
     public function testGetAllReturnsChirpCollection()
     {
+        $rows   = [];
         $chirps = [];
         for ($i = 0; $i < 3; $i++) {
             $uuid      = $this->faker->uuid;
-            $chirpText = $this->faker->realText(50);
+            $chirpText = ''; //$this->faker->text(50);
             $author    = $this->faker->userName;
-            $now       = (new \DateTime())->format('Y-m-d H:i:s');
-            $chirps[]  = new Chirp($uuid, $chirpText, $author, $now);
+            $createdAt = '';//$this->faker->date('Y-m-d H:i:s');
+            $rows[]    = ['id' => $uuid, 'chirp_text' => $chirpText, 'author' => $author, 'created_at' => $createdAt];
+            $chirps[]  = new Chirp($uuid, $chirpText, $author, $createdAt);
         }
 
         $collection = new ChirpCollection($chirps);
 
         $statement = $this->createMock(\PDOStatement::class);
         $statement->method('fetchAll')
-                  ->willReturn($chirps);
+                  ->willReturn($rows);
 
         $this->pdo->method('query')
                   ->willReturn($statement);
 
         $driver = new PdoPersistenceDriver($this->pdo);
         $this->assertEquals($collection, $driver->getAll());
-
     }
 }

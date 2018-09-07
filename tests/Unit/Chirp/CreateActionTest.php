@@ -60,11 +60,12 @@ class CreateActionTest extends TestCase
         $this->assertInstanceOf(UnableToCreateChirpResponse::class, $response);
     }
 
+    /** @group realtext */
     public function testCreateSendsChirpToPersistence()
     {
         $request = new Request('POST', 'chirp', [], "");
         $chirp   = new Chirp($this->faker->uuid,
-                             $this->faker->realText(100),
+                             $this->faker->text(100),
                              $this->faker->userName,
                              $this->faker->date('Y-m-d H:i:s'));
 
@@ -92,11 +93,12 @@ class CreateActionTest extends TestCase
         $this->assertInstanceOf(InternalServerErrorResponse::class, $response);
     }
 
+    /** @group realtext */
     public function testCreateSendsSavedChirpToTransformer()
     {
         $request = new Request('POST', 'chirp', [], "");
         $chirp   = new Chirp($this->faker->uuid,
-                             $this->faker->realText(100),
+                             $this->faker->text(100),
                              $this->faker->userName,
                              $this->faker->date('Y-m-d H:i:s'));
 

@@ -10,10 +10,11 @@ class CreateChirpTest extends TestCase
 {
     private $host = 'http://api';
 
+    /** @group realtext */
     public function testValidPostReturnsSuccessfulResponse()
     {
         $attributes = (object)[
-            'text'   => $this->faker->realText(50),
+            'text'   => $this->faker->text(50),
             'author' => $this->faker->userName
         ];
         $data       = (object)[

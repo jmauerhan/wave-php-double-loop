@@ -3,6 +3,7 @@
 namespace Test;
 
 use Faker\Factory;
+use ReflectionObject;
 
 class TestCase extends \PHPUnit\Framework\TestCase
 {

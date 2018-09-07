@@ -49,17 +49,23 @@ class PdoPersistenceDriver implements PersistenceDriver
      */
     public function getAll(): ChirpCollection
     {
-        $sql  = "SELECT * FROM chirp ORDER BY created_at DESC";
-        $stmt = $this->pdo->query($sql);
+        $sql  = "SELECT id, chirp_text, author, created_at FROM chirp ORDER BY created_at DESC";
+        $stmt = $this->pdo->query($sql, \PDO::FETCH_ASSOC);
         if ($stmt === false) {
             $errors = $this->pdo->errorInfo() ?? [];
             throw new PersistenceDriverException(implode($errors));
         }
-
-        $chirps = $stmt->fetchAll(\PDO::FETCH_CLASS,
-                                  Chirp::class,
-                                  ['id', 'chirp_text', 'author', 'created_at']
-        );
+        $rows   = $stmt->fetchAll();
+        $chirps = array_map(
+            function ($row) {
+                return new Chirp(
+                    $row['id'],
+                    $row['chirp_text'],
+                    $row['author'],
+                    $row['created_at']
+                );
+            },
+            $rows);
 
         return new ChirpCollection($chirps);
     }

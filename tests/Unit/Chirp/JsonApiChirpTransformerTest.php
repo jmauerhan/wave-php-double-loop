@@ -56,10 +56,11 @@ class JsonApiChirpTransformerTest extends TestCase
         $transformer->toChirp($json);
     }
 
+    /** @group realtext */
     public function testToChirpReturnsChirpWithPropertiesFromJson()
     {
         $uuid      = $this->faker->uuid;
-        $chirpText = $this->faker->realText(50);
+        $chirpText = $this->faker->text(50);
         $author    = $this->faker->userName;
 
         $attributes = (object)[
@@ -86,10 +87,11 @@ class JsonApiChirpTransformerTest extends TestCase
         $this->assertEquals($expectedChirp, $chirp);
     }
 
+    /** @group realtext */
     public function testToJsonReturnsJsonString()
     {
         $uuid   = $this->faker->uuid;
-        $text   = $this->faker->realText(50);
+        $text   = $this->faker->text(50);
         $author = $this->faker->userName;
         $date   = $this->faker->date('Y-m-d H:i:s');
         $chirp  = new Chirp($uuid, $text, $author, $date);
@@ -115,15 +117,16 @@ JSON;
         $this->assertJsonStringEqualsJsonString($expectedJson, $json);
     }
 
+    /** @group realtext */
     public function testCollectionToJsonReturnsJsonWithAllChirps()
     {
         $chirps       = [];
         $expectedData = [];
         for ($i = 0; $i < 3; $i++) {
             $uuid      = $this->faker->uuid;
-            $chirpText = $this->faker->realText(50);
+            $chirpText = $this->faker->text(50);
             $author    = $this->faker->userName;
-            $now       = (new \DateTime())->format('Y-m-d H:i:s');
+            $now       = $this->faker->date('Y-m-d H:i:s');
             $chirps[]  = new Chirp($uuid, $chirpText, $author, $now);
 
             $expectedData[] = (object)[

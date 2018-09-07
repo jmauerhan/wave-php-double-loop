@@ -36,7 +36,7 @@ class CreateChirpContext implements Context
      */
     public function iWriteAChirpWithOrLessCharacters($maxLength)
     {
-        $this->chirpText = $this->faker->realText($maxLength);
+        $this->chirpText = $this->faker->text($maxLength);
     }
 
     /**
@@ -64,7 +64,7 @@ class CreateChirpContext implements Context
      */
     public function iShouldSeeItInMyTimeline()
     {
-        $response  = $this->httpClient->get('timeline');
+        $response  = $this->httpClient->get('');
         $json      = $response->getBody()->getContents();
         $chirpData = json_decode($json);
         $chirps    = $chirpData->data;

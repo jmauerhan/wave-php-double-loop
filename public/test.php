@@ -8,7 +8,7 @@ $obj   = (object)[
         'type'       => 'chirp',
         'id'         => $faker->uuid,
         'attributes' => (object)[
-            'text'   => $faker->realText(100),
+            'text'   => $faker->text(100),
             'author' => $faker->userName
         ]
     ]
@@ -34,6 +34,4 @@ $pdo    = new PDO($dsn, $dbUser, $dbPass);
 //Get the chirps out to see
 $sql    = "SELECT * FROM chirp ORDER BY created_at DESC";
 $result = $pdo->query($sql);
-var_dump($result->fetchAll(PDO::FETCH_CLASS,
-                           \Chirper\Chirp\Chirp::class,
-                           ['id', 'chirp_text', 'author', 'created_at']));
+var_dump($result->fetchAll(PDO::FETCH_ASSOC));
