@@ -14,7 +14,7 @@ services:
       - DB_USER=postgres
       - DB_PASSWORD=postgres
     ports:
-      - "3000:80"
+      - "3001:80"
   db:
     image: postgres
     environment:
@@ -23,3 +23,8 @@ services:
       - POSTGRES_DB=chirper
     ports:
       - "5000:5432"
+  frontend:
+    build:
+      context: ./app
+    ports:
+        - "3000:8080"
