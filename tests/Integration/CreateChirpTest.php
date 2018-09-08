@@ -4,12 +4,10 @@ namespace Test\Integration\Chirp;
 
 use GuzzleHttp\Client;
 use Ramsey\Uuid\Uuid;
-use Test\TestCase;
+use Test\Integration\TestCase;
 
 class CreateChirpTest extends TestCase
 {
-    private $host = 'http://api';
-
     /** @group realtext */
     public function testValidPostReturnsSuccessfulResponse()
     {
@@ -41,4 +39,9 @@ class CreateChirpTest extends TestCase
         unset($responseObject->data->attributes->created_at);
         $this->assertEquals($data, $responseObject->data);
     }
+
+//    public function testInvalidPostReturnsErrorResponse()
+//    {
+//
+//    }
 }
