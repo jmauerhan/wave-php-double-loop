@@ -40,9 +40,9 @@ class CreateChirpContext implements Context
     }
 
     /**
-     * @When I post the Chirp
+     * @When I publish the Chirp
      */
-    public function iPostTheChirp()
+    public function iPublishTheChirp()
     {
         $this->uuid = $this->faker->uuid;
         $author     = $this->faker->userName;

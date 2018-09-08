@@ -5,5 +5,5 @@ Feature: User can create Chirps
 
   Scenario: User Posts Chirp
     Given I write a Chirp with 100 or less characters
-    When I post the Chirp
+    When I publish the Chirp
     Then I should see it in my timeline
