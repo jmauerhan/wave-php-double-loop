@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Test\Integration\Chirp;
 
@@ -39,9 +39,4 @@ class CreateChirpTest extends TestCase
         unset($responseObject->data->attributes->created_at);
         $this->assertEquals($data, $responseObject->data);
     }
-
-//    public function testInvalidPostReturnsErrorResponse()
-//    {
-//
-//    }
 }
