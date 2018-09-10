@@ -1,5 +1,7 @@
 <?php declare(strict_types=1);
 
+header('Access-Control-Allow-Origin: *');
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Symfony\Component\HttpFoundation\Request AS SilexRequest;
