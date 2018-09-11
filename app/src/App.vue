@@ -4,8 +4,8 @@
             <v-layout row wrap>
                 <v-flex xs12 md6>
                     <h4 class="display-2">Chirper</h4>
-                    <v-textarea label="What's going on?" v-model="chirp.attributes.text"></v-textarea>
-                    <v-text-field label="Username" v-model="chirp.attributes.author"></v-text-field>
+                    <v-textarea label="What's going on?" name="chirp" v-model="chirp.attributes.text"></v-textarea>
+                    <v-text-field label="Username" name="author" v-model="chirp.attributes.author"></v-text-field>
                     <v-btn dark color="green" @click="addItem">Chirp!</v-btn>
                 </v-flex>
                 <v-flex xs12 md6>
