@@ -5,7 +5,7 @@
                 <v-flex xs12 md6>
                     <h4 class="display-2">Chirper</h4>
                     <v-textarea label="What's going on?" v-model="chirp.attributes.text"></v-textarea>
-                    <v-text-field label="Username"  v-model="chirp.attributes.author"></v-text-field>
+                    <v-text-field label="Username" v-model="chirp.attributes.author"></v-text-field>
                     <v-btn dark color="green" @click="addItem">Chirp!</v-btn>
                 </v-flex>
                 <v-flex xs12 md6>
@@ -40,7 +40,7 @@
 <script>
     import axios from "axios";
     import moment from "moment"
-    import uuidv4  from "uuid/v4"
+    import uuidv4 from "uuid/v4"
 
     export default {
         name: 'app',
@@ -48,6 +48,7 @@
             return {
                 chirp: {
                     id: "",
+                    type: "chirp",
                     attributes: {
                         text: "",
                         author: "",
@@ -58,22 +59,23 @@
             }
         },
         methods: {
-            addItem: function(){
-                this.chirp.attributes.created_at = moment().format("YYYY-MM-D hh:mm:ss");
-                this.chirp.id = uuidv4();
-                this.items.unshift(this.chirp)
-                this.chirp =  {
-                    id: "",
-                    attributes: {
-                        text: "",
-                        author: "",
-                        created_at: "",
-                    }
-                }
+            addItem: function () {
+                let chirp = Object.assign({},this.chirp);
+                chirp.attributes.created_at = moment().format("YYYY-MM-D hh:mm:ss")
+                chirp.id = uuidv4()
+                axios.post("http://localhost:3001/chirp", {data: chirp})
+                    .then(result => {
+                            this.items.unshift(chirp);
+                            this.chirp.attributes = {
+                                text: "",
+                                author: ""
+                            }
+                        }
+                    )
             }
         },
         mounted() {
-            axios({method: "GET", "url": "http://localhost:3001/"}).then(result => {
+            axios.get("http://localhost:3001/").then(result => {
                 this.items = result.data.data;
             });
         },

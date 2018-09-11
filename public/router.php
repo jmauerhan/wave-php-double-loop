@@ -1,7 +1,5 @@
 <?php declare(strict_types=1);
 
-header('Access-Control-Allow-Origin: *');
-
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Symfony\Component\HttpFoundation\Request AS SilexRequest;
@@ -55,4 +53,17 @@ $app->get('',
                                  $response->getHeaders());
     }
 );
+
+//Fixes CORS / Preflight stuff
+$app->options("{anything}",
+    function () {
+        return new \Symfony\Component\HttpFoundation\JsonResponse(null, 200);
+    })->assert("anything", ".*");
+
+$app->after(function (SilexRequest $request, SilexResponse $response) {
+    $response->headers->set('Access-Control-Allow-Origin', '*');
+    $response->headers->set('Access-Control-Allow-Methods', 'GET, POST');
+    $response->headers->set('Access-Control-Allow-Headers', 'content-type');
+});
+
 $app->run();
