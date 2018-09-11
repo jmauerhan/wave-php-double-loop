@@ -28,3 +28,7 @@ services:
       context: ./app
     ports:
         - "3000:8080"
+  chrome:
+    image: selenium/standalone-chrome:3.14.0-dubnium
+    ports:
+      - "4444:4444"
