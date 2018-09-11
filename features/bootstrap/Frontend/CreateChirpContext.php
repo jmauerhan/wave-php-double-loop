@@ -25,7 +25,7 @@ class CreateChirpContext implements Context
     {
         $this->faker      = Faker\Factory::create();
         $clientOpt        = [
-            'base_uri' => 'http://localhost:3000',
+            'base_uri' => 'http://localhost:8080',
         ];
         $client           = new Client($clientOpt);
         $this->httpClient = $client;
