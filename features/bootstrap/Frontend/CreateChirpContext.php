@@ -2,11 +2,9 @@
 
 namespace Test\Behavior\Context\Frontend;
 
-use Behat\Behat\Tester\Exception\PendingException;
-use Behat\Behat\Context\Context;
 use Behat\MinkExtension\Context\MinkContext;
 use Faker;
-use GuzzleHttp\Client;
+
 
 class CreateChirpContext extends MinkContext
 {
@@ -29,11 +27,12 @@ class CreateChirpContext extends MinkContext
      */
     public function iWriteAChirpWithOrLessCharacters($maxLength)
     {
+        $this->getSession()->start();
         $this->getSession()->visit('http://localhost:3000');
-        $this->chirpText = $this->faker->text($maxLength);
-        $page            = $this->getSession()->getPage();
-        $page->fillField("chirp", 'testing');
-        $page->fillField('author', 'me');
+        var_dump($this->getSession()->getStatusCode());
+        var_dump($this->getSession()->getPage()->getContent());
+        $ss = $this->getSession()->getScreenshot();
+        file_put_contents(time() . '.png', $ss);
 
     }
 
@@ -42,8 +41,6 @@ class CreateChirpContext extends MinkContext
      */
     public function iPublishTheChirp()
     {
-        $page = $this->getSession()->getPage();
-        $page->pressButton('CHIRP!');
 //        $this->uuid = $this->faker->uuid;
 //        $author     = $this->faker->userName;
 //        $obj        = (object)[

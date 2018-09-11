@@ -6,12 +6,13 @@ default:
       contexts: [Test\Behavior\Context\Frontend\CreateChirpContext]
   extensions:
     Behat\MinkExtension:
-      base_url:  'http://localhost:3000'
-      sessions:
-        default:
-          selenium2:
-            browser: chrome
-            wd_host: http://localhost:4444/wd/hub
-            capabilities:
-              chrome:
-                switches: ["--headless"]
+      base_url: http://localhost:3000
+      default_session: selenium2
+      selenium2:
+        browser: chrome
+        wd_host: http://localhost:4444/wd/hub
+        capabilities:
+          chrome:
+            switches:
+            - "--headless"
+            - "--disable-gpu"
