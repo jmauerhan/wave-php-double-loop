@@ -13,12 +13,16 @@ This tutorial will walk through practicing the Double Loop Workflow to create a 
 ## Setup - Do this before the conference!
 - `composer install` 
 - `docker-compose up -d`
-- Browse to `localhost:3000` and confirm there is a PHP info page
+- Browse to `localhost:3001` and confirm there is a PHP info page
   - If you're using docker-machine instead of Docker-for-X, use the correct IP address.
   
 #### Info
 - [JSON API](http://jsonapi.org/) - Our API will be implementing JSON API
 - [UUID Generator](https://www.uuidgenerator.net/) - You may want this during testing
+
+## Run Project
+- First, follow the steps in the Setup section if you haven't already.
+- `docker-compose exec api vendor/bin/phinx migrate` will setup the database
 
 ### Outline
 
