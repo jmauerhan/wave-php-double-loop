@@ -8,10 +8,13 @@ WORKDIR /usr/src/app
 # where available (npm@5+)
 COPY package*.json ./
 
+RUN npm install -g @vue/cli-service-global
+
 RUN npm install
 
 # Bundle app source
 COPY . .
 
 EXPOSE 8080
+
 CMD [ "npm", "run", "serve"]

@@ -17,7 +17,9 @@
     "ramsey/uuid": "^3.8",
     "robmorgan/phinx": "^0.10.6",
     "vlucas/valitron": "^1.4",
-    "ramsey/collection": "^0.3.0"
+    "ramsey/collection": "^0.3.0",
+    "dmore/chrome-mink-driver": "^2.6",
+    "dmore/behat-chrome-extension": "^1.2"
   },
   "require-dev": {
     "behat/behat": "^3.5",

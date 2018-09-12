@@ -29,6 +29,8 @@ services:
     ports:
         - "3000:8080"
   chrome:
-    image: selenium/standalone-chrome:3.14.0-dubnium
+    image: justinribeiro/chrome-headless
     ports:
-      - "4444:4444"
+      - "9222:9222"
+    cap_add:
+      - SYS_ADMIN

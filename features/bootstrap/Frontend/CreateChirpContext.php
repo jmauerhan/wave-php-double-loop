@@ -27,7 +27,6 @@ class CreateChirpContext extends MinkContext
      */
     public function iWriteAChirpWithOrLessCharacters($maxLength)
     {
-        $this->getSession()->start();
         $this->getSession()->visit('http://frontend:8080');
         $ss = $this->getSession()->getScreenshot();
         file_put_contents(time() . '.png', $ss);
