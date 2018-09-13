@@ -15,6 +15,9 @@ class CreateChirpContext extends MinkContext
     private $chirpText;
 
     /** @var string */
+    private $author;
+
+    /** @var string */
     private $uuid;
 
     public function __construct()
@@ -27,10 +30,14 @@ class CreateChirpContext extends MinkContext
      */
     public function iWriteAChirpWithOrLessCharacters($maxLength)
     {
-        $this->getSession()->visit('http://frontend:8080');
+        $this->getSession()->visit('http://localhost:3000');
         $ss = $this->getSession()->getScreenshot();
         file_put_contents(time() . '.png', $ss);
-
+        $page            = $this->getSession()->getPage();
+        $this->chirpText = $this->faker->text($maxLength);
+        $this->author    = $this->faker->userName;
+        $page->fillField('chirp', $this->chirpText);
+        $page->fillField('author', $this->author);
     }
 
     /**
@@ -38,19 +45,9 @@ class CreateChirpContext extends MinkContext
      */
     public function iPublishTheChirp()
     {
-//        $this->uuid = $this->faker->uuid;
-//        $author     = $this->faker->userName;
-//        $obj        = (object)[
-//            'data' => (object)[
-//                'type'       => 'chirp',
-//                'id'         => $this->uuid,
-//                'attributes' => (object)[
-//                    'text'   => $this->chirpText,
-//                    'author' => $author
-//                ]
-//            ]
-//        ];
-//        $this->httpClient->post('chirp', ['json' => $obj]);
+        $page = $this->getSession()->getPage();
+        $page->find('xpath', '//button')->click();
+        $this->getSession()->wait(2000);
     }
 
     /**
@@ -58,15 +55,7 @@ class CreateChirpContext extends MinkContext
      */
     public function iShouldSeeItInMyTimeline()
     {
-        $response  = $this->httpClient->get('');
-        $json      = $response->getBody()->getContents();
-        $chirpData = json_decode($json);
-        $chirps    = $chirpData->data;
-        foreach ($chirps AS $chirp) {
-            if ($chirp->attributes->text == $this->chirpText && $chirp->id == $this->uuid) {
-                return true;
-            }
-        }
-        throw new \Exception("Chirp with text '{$this->chirpText}' and UUID: {$this->uuid} not found");
+        $ss = $this->getSession()->getScreenshot();
+        file_put_contents(time() . '.png', $ss);
     }
 }

@@ -5,11 +5,12 @@ default:
     frontend:
       contexts: [Test\Behavior\Context\Frontend\CreateChirpContext]
   extensions:
-    DMore\ChromeExtension\Behat\ServiceContainer\ChromeExtension: ~
     Behat\MinkExtension:
-      browser_name: chrome
-      base_url: http://localhost:3000
+      #If you're running a server on a different port, or have a /etc/hosts file set up, change this.
+      base_url:  'http://localhost:3000'
       sessions:
         default:
-          chrome:
-            api_url: "http://localhost:9222"
+          goutte: ~
+        javascript:
+          selenium2:
+            browser: phantomjs

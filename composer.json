@@ -19,7 +19,8 @@
     "vlucas/valitron": "^1.4",
     "ramsey/collection": "^0.3.0",
     "dmore/chrome-mink-driver": "^2.6",
-    "dmore/behat-chrome-extension": "^1.2"
+    "dmore/behat-chrome-extension": "^1.2",
+    "behat/mink-goutte-driver": "^1.2"
   },
   "require-dev": {
     "behat/behat": "^3.5",

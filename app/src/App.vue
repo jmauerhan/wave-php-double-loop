@@ -60,10 +60,10 @@
         },
         methods: {
             addItem: function () {
-                let chirp = Object.assign({},this.chirp);
+                let chirp = Object.assign({}, this.chirp);
                 chirp.attributes.created_at = moment().format("YYYY-MM-D hh:mm:ss")
                 chirp.id = uuidv4()
-                axios.post("http://localhost:3001/chirp", {data: chirp})
+                axios.post("chirp", {data: chirp})
                     .then(result => {
                             this.items.unshift(chirp);
                             this.chirp.attributes = {
@@ -75,7 +75,7 @@
             }
         },
         mounted() {
-            axios.get("http://localhost:3001/").then(result => {
+            axios.get("/").then(result => {
                 this.items = result.data.data;
             });
         },

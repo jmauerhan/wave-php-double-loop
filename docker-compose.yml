@@ -1,4 +1,4 @@
-version: '3'
+version: '2'
 services:
   api:
     build:
@@ -15,6 +15,10 @@ services:
       - DB_PASSWORD=postgres
     ports:
       - "3001:80"
+    networks:
+      chirper:
+        aliases:
+          - api.chirper.com
   db:
     image: postgres
     environment:
@@ -23,14 +27,17 @@ services:
       - POSTGRES_DB=chirper
     ports:
       - "5000:5432"
+    networks:
+      - chirper
   frontend:
     build:
       context: ./app
     ports:
-        - "3000:8080"
-  chrome:
-    image: justinribeiro/chrome-headless
-    ports:
-      - "9222:9222"
-    cap_add:
-      - SYS_ADMIN
+      - "80:8080"
+    networks:
+      chirper:
+        aliases:
+        - local.chirper.com
+
+networks:
+  chirper:
