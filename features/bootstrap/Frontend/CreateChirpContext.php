@@ -37,6 +37,7 @@ class CreateChirpContext extends MinkContext
     {
         $this->session = $this->getSession('js');
         $this->session->start();
+        $this->session->visit('http://local.chirper.com:8080');
         $page            = $this->session->getPage();
         $this->chirpText = $this->faker->text($maxLength);
         $this->author    = $this->faker->userName;
