@@ -4,6 +4,7 @@ namespace Test\Behavior\Context\Frontend;
 
 use Behat\MinkExtension\Context\MinkContext;
 use Faker;
+use PHPUnit\Framework\Assert;
 
 
 class CreateChirpContext extends MinkContext
@@ -32,13 +33,12 @@ class CreateChirpContext extends MinkContext
     {
         $this->getSession()->start();
         $this->getSession()->visit("http://local.chirper.com:8080");
-        $ss = $this->getSession()->getScreenshot();
-        file_put_contents(time() . '.png', $ss);
         $page            = $this->getSession()->getPage();
         $this->chirpText = $this->faker->text($maxLength);
         $this->author    = $this->faker->userName;
         $page->fillField('chirp', $this->chirpText);
         $page->fillField('author', $this->author);
+        file_put_contents(time() . '.png', $this->getSession()->getScreenshot());
     }
 
     /**
@@ -48,7 +48,8 @@ class CreateChirpContext extends MinkContext
     {
         $page = $this->getSession()->getPage();
         $page->find('xpath', '//button')->click();
-        $this->getSession()->wait(2000);
+        $this->getSession()->wait(1000);
+        file_put_contents(time() . '.png', $this->getSession()->getScreenshot());
     }
 
     /**
@@ -56,7 +57,9 @@ class CreateChirpContext extends MinkContext
      */
     public function iShouldSeeItInMyTimeline()
     {
-        $ss = $this->getSession()->getScreenshot();
-        file_put_contents(time() . '.png', $ss);
+        file_put_contents(time() . '.png', $this->getSession()->getScreenshot());
+        $firstTimelineItem =
+            $this->getSession()->getPage()->find('xpath', "//div[@class='v-list__tile__content']//div");
+        Assert::assertEquals($this->chirpText, $firstTimelineItem->getText());
     }
 }
