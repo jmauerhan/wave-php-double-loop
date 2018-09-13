@@ -13,8 +13,15 @@ This tutorial will walk through practicing the Double Loop Workflow to create a 
 ## Setup - Do this before the conference!
 - `composer install` 
 - `docker-compose up -d`
-- Browse to `localhost:3001` and confirm there is a PHP info page
-  - If you're using docker-machine instead of Docker-for-X, use the correct IP address.
+- edit hosts file *Note:* If you're using docker-machine instead of Docker Desktop (Docker for Mac / Windows), use the correct IP address
+```
+127.0.0.1 local.chirper.com
+127.0.0.1 api.chirper.com
+127.0.0.1 db.chirper.com
+``` 
+- Browse to `api.chirper.com:3001` and confirm there is a PHP info page
+  
+
   
 #### Info
 - [JSON API](http://jsonapi.org/) - Our API will be implementing JSON API
