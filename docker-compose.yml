@@ -14,7 +14,7 @@ services:
       - DB_USER=postgres
       - DB_PASSWORD=postgres
     ports:
-      - "3001:80"
+      - "3001:3001"
     networks:
       chirper:
         aliases:
@@ -33,11 +33,19 @@ services:
     build:
       context: ./app
     ports:
-      - "80:8080"
+      - "8080:8080"
     networks:
       chirper:
         aliases:
         - local.chirper.com
+  chrome:
+    image: selenium/standalone-chrome:3.14.0-dubnium
+    ports:
+      - "4444:4444"
+    networks:
+      chirper:
+        aliases:
+          - chrome.chirper.com
 
 networks:
   chirper:

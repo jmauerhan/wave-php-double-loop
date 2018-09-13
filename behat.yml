@@ -6,11 +6,9 @@ default:
       contexts: [Test\Behavior\Context\Frontend\CreateChirpContext]
   extensions:
     Behat\MinkExtension:
-      #If you're running a server on a different port, or have a /etc/hosts file set up, change this.
-      base_url:  'http://localhost:3000'
+      base_url:  'http://local.chirper.com'
       sessions:
         default:
-          goutte: ~
-        javascript:
           selenium2:
-            browser: phantomjs
+            browser: chrome
+            wd_host: 'http://local.chirper.com:4444/wd/hub'
