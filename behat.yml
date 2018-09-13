@@ -9,6 +9,8 @@ default:
       base_url:  'http://local.chirper.com'
       sessions:
         default:
+          goutte: ~
+        js:
           selenium2:
             browser: chrome
             wd_host: 'http://local.chirper.com:4444/wd/hub'
