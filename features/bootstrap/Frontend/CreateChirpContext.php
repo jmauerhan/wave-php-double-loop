@@ -43,7 +43,7 @@ class CreateChirpContext extends MinkContext
         $this->author    = $this->faker->userName;
         $page->fillField('chirp', $this->chirpText);
         $page->fillField('author', $this->author);
-        file_put_contents(time() . '.png', $this->session->getScreenshot());
+//        file_put_contents(time() . '.png', $this->session->getScreenshot());
     }
 
     /**
@@ -54,7 +54,7 @@ class CreateChirpContext extends MinkContext
         $page = $this->session->getPage();
         $page->find('xpath', '//button')->click();
         $this->session->wait(1000);
-        file_put_contents(time() . '.png', $this->session->getScreenshot());
+//        file_put_contents(time() . '.png', $this->session->getScreenshot());
     }
 
     /**
@@ -62,7 +62,7 @@ class CreateChirpContext extends MinkContext
      */
     public function iShouldSeeItInMyTimeline()
     {
-        file_put_contents(time() . '.png', $this->session->getScreenshot());
+//        file_put_contents(time() . '.png', $this->session->getScreenshot());
         $firstTimelineItem =
             $this->session->getPage()->find('xpath', "//div[@class='v-list__tile__content']//div");
         Assert::assertEquals($this->chirpText, $firstTimelineItem->getText());
