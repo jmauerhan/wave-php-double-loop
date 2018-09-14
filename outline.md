@@ -30,7 +30,7 @@
 
 - read and explain `features/create-chirp.feature`
 - run the test
-  - append-snippets
+   - append-snippets
 - open `features/bootstrap/Api/CreateChirpContext.php`
   - Using faker for data
   - Use Guzzle for http requests to post to the app
