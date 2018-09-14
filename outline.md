@@ -1,6 +1,7 @@
 # Outline
 
 ## Discuss Project Goals, Tools, Etc
+
 - What are we building?
 - What tools will we use
    - docker
@@ -26,6 +27,7 @@
 - If there is something you don't understand, please raise your hand and ask about it.
 
 ## Behavior Test Loop
+
 - read and explain `features/create-chirp.feature`
 - run the test
   - append-snippets
