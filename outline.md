@@ -74,10 +74,10 @@
 
 #### Validator Adapter
 - POC code: `validate.php`
-  - create data array
-  - set up rules
-  - validate
-- tests: `tests/Unit/Http/Validation/ValitronValidatorTest.php`
+   - create data array
+   - set up rules
+   - validate
+- `tests/Unit/Http/Validation/ValitronValidatorTest.php`
    - `testSetRulesPassesRulesIntoValitron`
    - `testIsValidSendsArrayOfDataToValitron`
    - `testIsValidReturnsValidateValue`
