@@ -51,25 +51,42 @@
         - run DB migration: `docker-compose exec api vendor/bin/phinx migrate`
       - Write SQL
       - Run POC.
-  - Start unit tests
-    - `tests/Unit/Chirp/CreateActionTest.php`
-      - setup: We've identified 2 collaborators, mock those.
-      - `testCreateSendsRequestToTransformer`
-      - `testCreateReturnsInvalidChirpResponseOnTransformerException`
-      - `testCreateSendsChirpToPersistence`
-      - `testCreateReturnsInternalErrorResponseOnPersistenceException`
-      - `testCreateSendsSavedChirpToTransformer`
-      - `testCreateReturnsInternalServerErrorResponseOnTransformerException`
-      - `testCreateReturnsChirpCreatedResponseOnSuccess`
-    - `tests/Unit/Chirp/JsonApiChirpTransformerTest.php`
-      - toChirp method:
-        - needs to validate, and convert
-        - Send validate logic to a validator class.
-        - `testToChirpSendsJsonToValidator`
-        - `testToChirpThrowsInvalidJsonExceptionWhenJsonInvalid`
-        - `testToChirpReturnsChirpWithPropertiesFromJson`
-      - POC code: `validate.php`
-        - create data array
-        - set up rules
-        - validate
-      - Work on tests
+
+### `tests/Unit/Chirp/CreateActionTest.php`
+- setup: We've identified 2 collaborators, mock those.
+- `testCreateSendsRequestToTransformer`
+- `testCreateReturnsInvalidChirpResponseOnTransformerException`
+- `testCreateSendsChirpToPersistence`
+- `testCreateReturnsInternalErrorResponseOnPersistenceException`
+- `testCreateSendsSavedChirpToTransformer`
+- `testCreateReturnsInternalServerErrorResponseOnTransformerException`
+- `testCreateReturnsChirpCreatedResponseOnSuccess`
+
+### `tests/Unit/Chirp/JsonApiChirpTransformerTest.php`
+- toChirp method:
+  - needs to validate, and convert
+  - Send validate logic to a validator class.
+  - `testToChirpSendsJsonToValidator`
+  - `testToChirpThrowsInvalidJsonExceptionWhenJsonInvalid`
+  - `testToChirpReturnsChirpWithPropertiesFromJson`
+
+#### Validator Adapter
+- POC code: `validate.php`
+  - create data array
+  - set up rules
+  - validate
+- tests: `tests/Unit/Http/Validation/ValitronValidatorTest.php`
+   - `testSetRulesPassesRulesIntoValitron`
+   - `testIsValidSendsArrayOfDataToValitron`
+   - `testIsValidReturnsValidateValue`
+   - `testGetErrorsReturnsEmptyArrayForValidData`
+   - `testGetErrorsReturnsFlattenedArrayOfErrorsPer`
+   
+### `tests/Unit/Chirp/PdoPersistenceDriverTest.php`
+- refer to `test.php` for code
+- `testSavePreparesStatement`
+- `testSaveThrowsExceptionWhenPrepareThrowsException`
+- `testSaveExecutesStatement`
+- `testSaveThrowsExceptionWhenExecuteReturnsFalse`
+- `testSaveReturnsTrueWhenChirpInserted`
+
