@@ -19,9 +19,6 @@ class CreateChirpContext extends MinkContext
     /** @var string */
     private $author;
 
-    /** @var string */
-    private $uuid;
-
     /** @var Session */
     private $session;
 
