@@ -10,7 +10,7 @@ class InvalidJsonException extends \Exception
     public function __construct(array $errors = null, Throwable $previous = null)
     {
         $errors  = $errors ?? [[
-                                   'status' => Response::BAD_REQUEST,
+                                   'status' => Response::CLIENT_CONFLICT,
                                    'title'  => 'Invalid JSON',
                                    'detail' => 'Invalid or missing JSON data structure'
                                ]];

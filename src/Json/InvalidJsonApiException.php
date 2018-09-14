@@ -13,7 +13,7 @@ class InvalidJsonApiException extends InvalidJsonException
             array_map(
                 function ($error) {
                     return [
-                        'status' => Response::BAD_REQUEST,
+                        'status' => Response::CLIENT_CONFLICT,
                         'title'  => $error['error'],
                         'source' => (object)['pointer' => $error['property']]
                     ];

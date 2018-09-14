@@ -8,7 +8,7 @@ class UnableToCreateChirpResponse extends Response
 {
     public function __construct($body = null)
     {
-        $status = Response::BAD_REQUEST;
+        $status = Response::CLIENT_CONFLICT;
         parent::__construct($status, [], $body);
     }
 }

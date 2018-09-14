@@ -7,7 +7,7 @@ use PDO;
 class TestCase extends \Test\TestCase
 {
     /** @var string */
-    protected $host = 'http://api';
+    protected $host = 'http://api.chirper.com:3001';
 
     /** @var PDO */
     protected $pdo;

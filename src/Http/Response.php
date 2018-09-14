@@ -9,6 +9,7 @@ class Response extends Psr7Response
     const OK                    = 200;
     const CREATED               = 201;
     const BAD_REQUEST           = 400;
+    const CLIENT_CONFLICT       = 409;
     const INTERNAL_SERVER_ERROR = 500;
 
     public function __construct(int $status = 200,
