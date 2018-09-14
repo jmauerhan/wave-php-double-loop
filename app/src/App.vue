@@ -78,7 +78,7 @@
                             }
                         }, error => {
                             this.error = true
-                            this.errorMsg = "Sorry, your chirp must be 100 characters or less"
+                            this.errorMsg = error.response.data.errors
                         }
                     )
             }
