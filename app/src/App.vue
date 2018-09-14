@@ -45,6 +45,7 @@
     import axios from "axios";
     import moment from "moment"
     import uuidv4 from "uuid/v4"
+    import _ from 'lodash'
 
     export default {
         name: 'app',
@@ -78,7 +79,7 @@
                             }
                         }, error => {
                             this.error = true
-                            this.errorMsg = error.response.data.errors
+                            this.errorMsg = _.chain(error.response.data.errors).map('title').join(', ').value();
                         }
                     )
             }
