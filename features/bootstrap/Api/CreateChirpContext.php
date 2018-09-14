@@ -75,4 +75,36 @@ class CreateChirpContext implements Context
         }
         throw new \Exception("Chirp with text '{$this->chirpText}' and UUID: {$this->uuid} not found");
     }
+
+    /**
+     * @When I submit the Chirp
+     */
+    public function iSubmitTheChirp()
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Given I write a Chirp with more than :arg1 characters
+     */
+    public function iWriteAChirpWithMoreThanCharacters($arg1)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Then I should not see it in my timeline
+     */
+    public function iShouldNotSeeItInMyTimeline()
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Then I should see an error message
+     */
+    public function iShouldSeeAnErrorMessage()
+    {
+        throw new PendingException();
+    }
 }

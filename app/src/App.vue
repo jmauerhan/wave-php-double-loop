@@ -4,6 +4,10 @@
             <v-layout row wrap>
                 <v-flex xs12 md6>
                     <h4 class="display-2">Chirper</h4>
+                    <v-alert :value="error"
+                             type="error"
+                             color="red">{{errorMsg}}
+                    </v-alert>
                     <v-textarea label="What's going on?" name="chirp" v-model="chirp.attributes.text"></v-textarea>
                     <v-text-field label="Username" name="author" v-model="chirp.attributes.author"></v-text-field>
                     <v-btn dark color="green" @click="addItem">Chirp!</v-btn>
@@ -55,7 +59,9 @@
                         created_at: "",
                     }
                 },
-                items: []
+                items: [],
+                error: false,
+                errorMsg: ""
             }
         },
         methods: {
@@ -70,6 +76,9 @@
                                 text: "",
                                 author: ""
                             }
+                        }, error => {
+                            this.error = true
+                            this.errorMsg = "Sorry, your chirp must be 100 characters or less"
                         }
                     )
             }

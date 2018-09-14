@@ -13,15 +13,20 @@ This tutorial will walk through practicing the Double Loop Workflow to create a 
 ## Setup - Do this before the conference!
 - `composer install` 
 - `docker-compose up -d`
-- edit hosts file *Note:* If you're using docker-machine instead of Docker Desktop (Docker for Mac / Windows), use the correct IP address
+- edit `hosts` file 
 ```
-127.0.0.1 local.chirper.com
-127.0.0.1 api.chirper.com
-127.0.0.1 db.chirper.com
+127.0.0.1   local.chirper.com
+127.0.0.1   api.chirper.com
+127.0.0.1   db.chirper.com
 ``` 
+*Note:* If you're using docker-machine instead of Docker Desktop (Docker for Mac / Windows), 
+use the correct IP address
+
 - Browse to `api.chirper.com:3001` and confirm there is a PHP info page
 
-If you are unable to complete these steps before the tutorial, please message me on Twitter @jessicamauerhan - and we will debug, or we will get it working day of. 
+If you are unable to complete these steps before the tutorial, please message me on 
+Twitter [@jessicamauerhan](https://twitter.com/JessicaMauerhan) - and we will debug, 
+or we will get it working day of. 
   
 
   
@@ -43,7 +48,6 @@ If you are unable to complete these steps before the tutorial, please message me
 - TestCase with Faker
 - Response/Request classes
 - All core classes and test classes with tests commented out
-- remove exception codes
 
 #### Creating Chirps Task
 
