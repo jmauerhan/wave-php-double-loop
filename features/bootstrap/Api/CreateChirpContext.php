@@ -6,6 +6,9 @@ use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Faker;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
+use PHPUnit\Framework\Assert;
+use Psr\Http\Message\ResponseInterface;
 
 class CreateChirpContext implements Context
 {
@@ -20,6 +23,9 @@ class CreateChirpContext implements Context
 
     /** @var string */
     private $uuid;
+
+    /** @var ClientException */
+    private $exception;
 
     public function __construct()
     {
@@ -40,9 +46,9 @@ class CreateChirpContext implements Context
     }
 
     /**
-     * @When I publish the Chirp
+     * @When I submit the Chirp
      */
-    public function iPublishTheChirp()
+    public function iSubmitTheChirp()
     {
         $this->uuid = $this->faker->uuid;
         $author     = $this->faker->userName;
@@ -56,7 +62,11 @@ class CreateChirpContext implements Context
                 ]
             ]
         ];
-        $this->httpClient->post('chirp', ['json' => $obj]);
+        try {
+            $this->httpClient->post('chirp', ['json' => $obj]);
+        } catch (ClientException $exception) {
+            $this->exception = $exception;
+        }
     }
 
     /**
@@ -77,19 +87,14 @@ class CreateChirpContext implements Context
     }
 
     /**
-     * @When I submit the Chirp
+     * @Given I write a Chirp with more than :minLength characters
      */
-    public function iSubmitTheChirp()
+    public function iWriteAChirpWithMoreThanCharacters($minLength)
     {
-        throw new PendingException();
-    }
-
-    /**
-     * @Given I write a Chirp with more than :arg1 characters
-     */
-    public function iWriteAChirpWithMoreThanCharacters($arg1)
-    {
-        throw new PendingException();
+        $this->chirpText = $this->faker->sentence;
+        while (strlen($this->chirpText) <= $minLength) {
+            $this->chirpText .= $this->faker->sentence;
+        }
     }
 
     /**
@@ -97,7 +102,15 @@ class CreateChirpContext implements Context
      */
     public function iShouldNotSeeItInMyTimeline()
     {
-        throw new PendingException();
+        $response  = $this->httpClient->get('');
+        $json      = $response->getBody()->getContents();
+        $chirpData = json_decode($json);
+        $chirps    = $chirpData->data;
+        foreach ($chirps AS $chirp) {
+            if ($chirp->attributes->text == $this->chirpText && $chirp->id == $this->uuid) {
+                throw new \Exception("Chirp with text '{$this->chirpText}' and was found");
+            }
+        }
     }
 
     /**
@@ -105,6 +118,15 @@ class CreateChirpContext implements Context
      */
     public function iShouldSeeAnErrorMessage()
     {
-        throw new PendingException();
+        $responseData    = $this->exception->getResponse()->getBody()->getContents();
+        $responseObjData = json_decode($responseData);
+        $errors          = $responseObjData->errors;
+        foreach ($errors AS $error) {
+            if ($error->source->pointer == "data.attributes.text" &&
+                $error->title == "Data.attributes.text must not exceed 100 characters") {
+                return true;
+            }
+        }
+        throw new \Exception("Error message not found");
     }
 }

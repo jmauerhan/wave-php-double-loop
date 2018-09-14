@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Test\Behavior\Context\Frontend;
 
@@ -87,8 +87,9 @@ class CreateChirpContext extends MinkContext
      */
     public function iShouldNotSeeItInMyTimeline()
     {
-        $firstTimelineItem =
-            $this->session->getPage()->find('xpath', "//div[@class='v-list__tile__content']//div");
+        $firstTimelineItem = $this->session
+            ->getPage()
+            ->find('xpath', "//div[@class='v-list__tile__content']//div");
         Assert::assertNotEquals($this->chirpText, $firstTimelineItem->getText());
     }
 
@@ -97,7 +98,6 @@ class CreateChirpContext extends MinkContext
      */
     public function iShouldSeeAnErrorMessage()
     {
-        file_put_contents(time() . '.png', $this->session->getScreenshot());
         $error = $this->session->getPage()->find('css', '.v-alert');
         Assert::assertNotNull($error);
         Assert::assertContains("Sorry, your chirp must be 100 characters or less", $error->getText());
