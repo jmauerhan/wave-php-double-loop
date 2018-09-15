@@ -39,7 +39,15 @@
     - write a chirp: generate text
     - submit the chirp: generate the rest of the data, post it. 
     - see it in my timeline: do a new request to the timeline endpoint
-    
+- open `features/bootstrap/Frontend/CreateChirpContext.php`
+   - uses MinkContext to hook up to the headless chrome
+   - Check Selenium: `http://local.chirper.com:4444/wd/hub/status`
+   - You can run these two services separately, if you need more control over the headless chrome for debugging. 
+    - start filling in steps for first test, run test each time
+       - write a chirp: generate text
+       - submit the chirp: generate the rest of the data, post it. 
+       - see it in my timeline: do a new request to the timeline endpoint
+
 ## Unit Test Loop
 - Start on the outside with the Controller/Action
   - Create Method needs To:
@@ -92,3 +100,47 @@
 - `testSaveThrowsExceptionWhenExecuteReturnsFalse`
 - `testSaveReturnsTrueWhenChirpInserted`
 
+## Integration Test: `tests/Integration/CreateChirpTest.php`
+- Integration test is just to check that all of the parts are actually wired up correctly
+- `testValidPostReturnsSuccessfulResponse` 
+   - mock data, use Guzzle to post it, assert 201 & response object
+- Create `post` route in `public/router.php`
+
+## Run Behavior Tests (API suite)
+
+## Back into Unit Tests for Get Timeline
+
+### `tests/Integration/GetTimelineTest.php`
+- preload DB with 3-5 chirps
+- Use dates - today, two weeks ago, yesterday, one month ago
+- Hit the POST API endpoint with the new data
+- Get the GET endpoint
+   - rsort the dates 
+   ```
+   $createdAtDates = array_column(array_column($data, 'attributes'), 'created_at');
+   $expected       = $createdAtDates;
+   rsort($expected);
+   ```
+- add get route to router
+
+### `tests/Unit/Chirp/GetTimelineActionTest.php`
+- `testGetAllGetsChirpsFromPersistenceDriver`
+- `testGetAllReturnsInternalErrorResponseOnPersistenceException`
+- `testGetAllTransformsChirpsToJson`
+- `testGetAllReturnsInternalErrorResponseOnTransformerException`
+- `testGetAllReturnsTimelineResponseWithChirps`
+
+### `tests/Unit/Chirp/PdoPersistenceDriverTest.php`
+- `testGetAllExecutesQuery`
+- `testGetAllThrowsExceptionWhenQueryReturnsFalse`
+- `testGetAllReturnsChirpCollection`
+
+### `tests/Unit/Chirp/JsonApiChirpTransformerTest.php`
+- `testToJsonReturnsJsonString`
+- `testCollectionToJsonReturnsJsonWithAllChirps`
+
+## Run all unit Tests
+## Run Integration Tests
+## Run Behavior Tests 
+
+## Fill in Behavior Tests for Validation Scenarios
