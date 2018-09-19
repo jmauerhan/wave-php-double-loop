@@ -34,17 +34,22 @@ class JsonApiChirpTransformer implements JsonChirpTransformer
     public function toJson(Chirp $chirp): string
     {
         $object = (object)[
-            'data' => (object)[
-                'type'       => 'chirp',
-                'id'         => $chirp->getId(),
-                'attributes' => (object)[
-                    'text'       => $chirp->getText(),
-                    'author'     => $chirp->getAuthor(),
-                    'created_at' => $chirp->getCreatedAt()
-                ],
-            ]
+            'data' => $this->chirpToObject($chirp)
         ];
         return json_encode($object);
+    }
+
+    private function chirpToObject(Chirp $chirp): \stdClass
+    {
+        return (object)[
+            'type'       => 'chirp',
+            'id'         => $chirp->getId(),
+            'attributes' => (object)[
+                'text'       => $chirp->getText(),
+                'author'     => $chirp->getAuthor(),
+                'created_at' => $chirp->getCreatedAt()
+            ]
+        ];
     }
 
     /**
@@ -82,15 +87,7 @@ class JsonApiChirpTransformer implements JsonChirpTransformer
         $data = [];
         /** @var Chirp $chirp */
         foreach ($chirpCollection AS $chirp) {
-            $data[] = (object)[
-                'type'       => 'chirp',
-                'id'         => $chirp->getId(),
-                'attributes' => (object)[
-                    'text'       => $chirp->getText(),
-                    'author'     => $chirp->getAuthor(),
-                    'created_at' => $chirp->getCreatedAt()
-                ],
-            ];
+            $data[] = $this->chirpToObject($chirp);
         }
         $object = (object)[
             'data' => $data
