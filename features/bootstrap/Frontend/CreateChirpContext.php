@@ -69,7 +69,7 @@ class CreateChirpContext extends MinkContext
      */
     public function iWriteAChirpWithMoreThanCharacters($minLength)
     {
-        $this->session = $this->getSession('js');
+        $this->session = $this->getSession();
         $this->session->start();
         $this->session->visit('http://local.chirper.com:8080');
         $page            = $this->session->getPage();
